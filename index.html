@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SR Computer Academy & SR Study Library</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- AOS Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===== Header / Navbar ===== -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <img src="images/logo.jpg" alt="Logo" />
+        <h2>SR Computer Academy</h2>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#courses">Courses</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="menu-toggle">☰</div>
+    </nav>
+  </header>
+
+  <!-- ===== Hero / Home Section ===== -->
+  <section id="home" class="hero">
+    <div class="hero-content" data-aos="fade-up">
+      <h1>Learn. Practice. Excel.</h1>
+      <p>Join our hands-on computer courses and SR Study Library for a complete learning experience. Small batches. Real projects. Certificates.</p>
+      <a href="#courses" class="btn">Explore Courses</a>
+    </div>
+  </section>
+
+  <!-- ===== About Section ===== -->
+  <section id="about" class="about">
+    <div class="container" data-aos="fade-up">
+      <div class="about-content">
+        <div class="about-text">
+          <h2>About Us</h2>
+          <p>
+            Welcome to <strong>SR Computer Academy & SR Study Library</strong>!  
+            Our mission is to empower students with practical computer skills, modern learning facilities, and a supportive environment.
+          </p>
+          <ul class="about-points">
+            <li><i class="fa-solid fa-laptop-code"></i> Hands-on computer courses: Basics to advanced.</li>
+            <li><i class="fa-solid fa-book-open"></i> SR Study Library: Calm, fully-equipped study zones.</li>
+            <li><i class="fa-solid fa-user-graduate"></i> Experienced instructors and certified courses.</li>
+            <li><i class="fa-solid fa-clock"></i> Flexible batch timings and library hours.</li>
+            <li><i class="fa-solid fa-award"></i> Certificate on completion & practical projects.</li>
+          </ul>
+          <a href="#courses" class="btn">View Our Courses</a>
+        </div>
+        <div class="about-image">
+          <img src="images/about.jpg" alt="About Computer Classes and Library" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Courses Section ===== -->
+  <section id="courses" class="courses">
+    <div class="container" data-aos="fade-up">
+      <h2>Our Courses</h2>
+      <div class="course-list">
+
+        <!-- Course Item -->
+        <div class="course-card">
+          <img src="images/course-dca.jpg" alt="DCA" />
+          <h3>DCA</h3>
+          <button class="btn view-details" data-course="dca">View Details</button>
+        </div>
+
+        <div class="course-card">
+          <img src="images/course-adca.jpg" alt="ADCA" />
+          <h3>ADCA</h3>
+          <button class="btn view-details" data-course="adca">View Details</button>
+        </div>
+
+        <div class="course-card">
+          <img src="images/course-dfa.jpg" alt="DFA" />
+          <h3>DFA</h3>
+          <button class="btn view-details" data-course="dfa">View Details</button>
+        </div>
+
+        <div class="course-card">
+          <img src="images/course-ccc.jpg" alt="CCC" />
+          <h3>CCC</h3>
+          <button class="btn view-details" data-course="ccc">View Details</button>
+        </div>
+
+        <div class="course-card">
+          <img src="images/course-web.jpg" alt="Web Design" />
+          <h3>Web Design</h3>
+          <button class="btn view-details" data-course="web">View Details</button>
+        </div>
+
+        <div class="course-card">
+          <img src="images/course-data.jpg" alt="Data Analytics" />
+          <h3>Data Analytics</h3>
+          <button class="btn view-details" data-course="data">View Details</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Course Details Modal ===== -->
+  <div id="courseModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3 id="modalCourseTitle">Course Title</h3>
+      <p id="modalCourseDesc">Course Description</p>
+    </div>
+  </div>
+
+  <!-- ===== Gallery Section ===== -->
+  <section id="gallery" class="gallery">
+    <div class="container" data-aos="fade-up">
+      <h2>Our Gallery</h2>
+      <div class="gallery-grid">
+        <img src="images/gallery1.jpg" alt="Gallery 1" />
+        <img src="images/gallery2.jpg" alt="Gallery 2" />
+        <img src="images/gallery3.jpg" alt="Gallery 3" />
+        <img src="images/gallery4.jpg" alt="Gallery 4" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Contact Section ===== -->
+  <section id="contact" class="contact">
+    <div class="container" data-aos="fade-up">
+      <h2>Contact Us</h2>
+      <div class="contact-container">
+        <form id="contactForm">
+          <input type="text" placeholder="Your Name" required />
+          <input type="email" placeholder="Your Email" required />
+          <input type="text" placeholder="Phone Number" required />
+          <textarea placeholder="Your Message" required></textarea>
+          <button type="submit" class="btn">Send Message</button>
+        </form>
+        <div class="contact-info">
+          <h3>Get in Touch</h3>
+          <p><strong>Address:</strong> Varanasi, Uttar Pradesh</p>
+          <p><strong>Phone:</strong> +91 98765 43210</p>
+          <p><strong>Email:</strong> info@computerclasses.com</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <p>© 2025 SR Computer Academy & SR Study Library. All Rights Reserved.</p>
+  </footer>
+
+  <!-- ===== Scripts ===== -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
