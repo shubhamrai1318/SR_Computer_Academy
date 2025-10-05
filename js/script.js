@@ -18,7 +18,7 @@ const heroTexts = [
   "Learn. Practice. Excel.",
   "Master Computer Skills Easily.",
   "Hands-on Training & Real Projects.",
-  "Join Shubham's Computer Classes Today!"
+  "Join SR Computer Academy Today!"
 ];
 
 let heroIndex = 0;
