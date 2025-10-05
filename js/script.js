@@ -15,9 +15,10 @@ AOS.init({
 
 // ===== Hero Section Text Rotation =====
 const heroTexts = [
-  "Learn. Practice. Excel.",
+  "Empowering You Through Digital Skills.",
   "Master Computer Skills Easily.",
-  "Hands-on Training & Real Projects.",
+  "Upgrade Your Skills. Secure Your Future.",
+  "From Basics to Brilliance in Computing.",
   "Join SR Computer Academy Today!"
 ];
 
