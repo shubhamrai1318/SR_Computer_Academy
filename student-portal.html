@@ -1,0 +1,67 @@
+<!-- {
+    "status": "success",
+    "student": {
+      "username": "shubham",
+      "password": "shubham123",
+      "name": "Shubham Rai",
+      "course": "DCA",
+      "batch": "Morning",
+      "contact": "9876543210"
+    }
+  } -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portal | SR Study Library</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .portal-container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    h2 { color: #3498db; }
+    .info-box { text-align: left; margin-top: 20px; }
+    .info-box p { margin: 8px 0; }
+  </style>
+</head>
+<body>
+
+  <div class="portal-container">
+    <h2>Welcome, <span id="studentName"></span> 👋</h2>
+    <div class="info-box">
+      <p><strong>Username:</strong> <span id="studentUsername"></span></p>
+      <p><strong>Course:</strong> <span id="studentCourse"></span></p>
+      <p><strong>Batch:</strong> <span id="studentBatch"></span></p>
+      <p><strong>Contact:</strong> <span id="studentContact"></span></p>
+      <p><strong>Address:</strong> <span id="studentAdd"></span></p>
+    </div>
+    <button id="logoutBtn" class="btn" style="margin-top:20px;">Logout</button>
+  </div>
+
+  <script>
+    const student = JSON.parse(localStorage.getItem("studentData"));
+    if (!student) {
+      window.location.href = "index.html";
+    } else {
+      document.getElementById("studentName").textContent = student.name;
+      document.getElementById("studentUsername").textContent = student.username;
+      document.getElementById("studentCourse").textContent = student.course;
+      document.getElementById("studentBatch").textContent = student.batch;
+      document.getElementById("studentContact").textContent = student.contact;
+      document.getElementById("studentAdd").textContent = student.address;
+    }
+
+    document.getElementById("logoutBtn").onclick = () => {
+      localStorage.removeItem("studentData");
+      window.location.href = "index.html";
+    };
+  </script>
+</body>
+</html>

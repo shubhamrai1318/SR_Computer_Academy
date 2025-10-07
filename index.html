@@ -27,8 +27,35 @@
         <li><a href="#home">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#courses">Courses</a></li>
-        <li><a href="#gallery">Gallery</a></li>
+        <!-- <li><a href="#gallery">Gallery</a></li> -->
         <li><a href="#contact">Contact</a></li>
+        <!-- <li><a href="#" id="studentLoginLink">Student Login</a></li> -->
+        <!-- <div class="login-buttons"> -->
+            <button id="adminLoginBtn" class="btn small-btn">Admin Login</button>
+            <button id="studentLoginBtn" class="btn small-btn">Student Login</button>
+          <!-- </div> -->
+          <!-- ===== Admin Login Modal ===== -->
+        <div id="adminModal" class="modal">
+            <div class="modal-content">
+              <span class="close" id="closeAdmin">&times;</span>
+              <h2>Admin Login</h2>
+              <input type="text" id="adminUser" placeholder="Username" required>
+              <input type="password" id="adminPass" placeholder="Password" required>
+              <button id="adminSubmit" class="btn">Login</button>
+            </div>
+          </div>
+          
+          <!-- ===== Student Login Modal ===== -->
+          <div id="studentModal" class="modal">
+            <div class="modal-content">
+              <span class="close" id="closeStudent">&times;</span>
+              <h2>Student Login</h2>
+              <div id="spinner" class="spinner" style="display:none; margin-top:10px;"></div>
+              <input type="text" id="studentUser" placeholder="Username" required>
+              <input type="password" id="studentPass" placeholder="Password" required>
+              <button id="studentSubmit" class="btn">Login</button>
+            </div>
+          </div>
       </ul>
       <div class="menu-toggle">☰</div>
     </nav>
@@ -161,6 +188,30 @@
     </div>
   </section>
 
+  <!-- <div class="login-buttons">
+    <button id="adminLoginBtn" class="btn small-btn">Admin Login</button>
+    <button id="studentLoginBtn" class="btn small-btn">Student Login</button>
+  </div> -->
+  <!-- ===== Admin Login Modal ===== -->
+<!-- <div id="adminModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeAdmin">&times;</span>
+      <h2>Admin Login</h2>
+      <input type="text" id="adminUser" placeholder="Username" required>
+      <input type="password" id="adminPass" placeholder="Password" required>
+      <button id="adminSubmit" class="btn">Login</button>
+    </div>
+  </div>
+  
+  <div id="studentModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeStudent">&times;</span>
+      <h2>Student Login</h2>
+      <input type="text" id="studentUser" placeholder="Username" required>
+      <input type="password" id="studentPass" placeholder="Password" required>
+      <button id="studentSubmit" class="btn">Login</button>
+    </div>
+  </div> -->
   <!-- ===== Footer ===== -->
   <footer>
     <p>© 2025 SR Computer Academy & SR Study Library. All Rights Reserved. </p> Designed by :

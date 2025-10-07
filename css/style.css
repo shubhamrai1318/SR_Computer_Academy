@@ -416,3 +416,90 @@ footer {
   .about-text { padding-right: 0; }
   .about-image img { margin-top: 30px; }
 }
+
+
+
+/* ===== Login Buttons ===== */
+.login-buttons {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.small-btn {
+  padding: 6px 14px;
+  font-size: 0.9rem;
+  background: #00c6ff;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.small-btn:hover {
+  background: #007bff;
+}
+
+/* ===== Modal ===== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+.modal-content input {
+  width: 90%;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.modal-content h2 {
+  margin-bottom: 15px;
+}
+
+.modal .btn {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #555;
+}
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

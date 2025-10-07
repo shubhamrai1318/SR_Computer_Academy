@@ -111,3 +111,94 @@ document.querySelectorAll('.nav-links a').forEach(link => {
     navLinks.classList.remove('show'); // close menu on mobile
   });
 });
+
+
+// ##########################
+
+// ===== Login Modals =====
+const adminModal = document.getElementById("adminModal");
+const studentModal = document.getElementById("studentModal");
+
+document.getElementById("adminLoginBtn").onclick = () => adminModal.style.display = "block";
+document.getElementById("studentLoginBtn").onclick = () => studentModal.style.display = "block";
+
+document.getElementById("closeAdmin").onclick = () => adminModal.style.display = "none";
+document.getElementById("closeStudent").onclick = () => studentModal.style.display = "none";
+
+window.onclick = (event) => {
+  if (event.target == adminModal) adminModal.style.display = "none";
+  if (event.target == studentModal) studentModal.style.display = "none";
+};
+
+// ===== Admin Login =====
+document.getElementById("adminSubmit").onclick = () => {
+  const user = document.getElementById("adminUser").value.trim();
+  const pass = document.getElementById("adminPass").value.trim();
+  if (user === "admin" && pass === "admin") {
+    alert("Welcome Admin!");
+    window.location.href = "student-portal.html";
+  } else {
+    alert("Invalid admin credentials.");
+  }
+};
+
+// // ===== Student Login =====
+// document.getElementById("studentSubmit").onclick = async () => {
+//   const username = document.getElementById("studentUser").value.trim();
+//   const password = document.getElementById("studentPass").value.trim();
+
+//   if (!username || !password) {
+//     alert("Please enter both username and password.");
+//     return;
+//   }
+//   // https://script.google.com/macros/s/AKfycbwMnF4a-YFgrx0RTMbmKSD--irM6Wc1kaP7k33TfsE1xlI8niV3cacEZklkhq0nj-Q/exec
+//   try {               
+//     const sheetUrl = "https://script.google.com/macros/s/AKfycbwMnF4a-YFgrx0RTMbmKSD--irM6Wc1kaP7k33TfsE1xlI8niV3cacEZklkhq0nj-Q/exec"; // <-- replace this
+//     const response = await fetch(`${sheetUrl}?user=${username}&pass=${password}`);
+//     const data = await response.json();
+
+//     if (data.status === "success") {
+//       alert("Login successful!");
+//       window.location.href = "student-portal.html";
+//     } else {
+//       alert("Invalid credentials. Please try again.");
+//     }
+//   } catch (error) {
+//     alert("Error connecting to the server. Check your Apps Script URL.");
+//   }
+// };
+// ===== Student Login =====
+document.getElementById("studentSubmit").onclick = async () => {
+  const username = document.getElementById("studentUser").value.trim();
+  const password = document.getElementById("studentPass").value.trim();
+
+  if (!username || !password) {
+    alert("Please enter both username and password.");
+    return;
+  }
+
+  // Show spinner
+  document.getElementById("studentSubmit").disabled = true;
+  document.getElementById("spinner").style.display = "inline-block";
+
+  try {
+    const sheetUrl = "https://script.google.com/macros/s/AKfycbwMnF4a-YFgrx0RTMbmKSD--irM6Wc1kaP7k33TfsE1xlI8niV3cacEZklkhq0nj-Q/exec";
+    const response = await fetch(`${sheetUrl}?user=${username}&pass=${password}`);
+    const data = await response.json();
+
+    if (data.status === "success") {
+      // alert("Login successful!");
+      localStorage.setItem("studentData", JSON.stringify(data.student));
+      window.location.href = "student-portal.html";
+    } else {
+      alert("Invalid credentials. Please try again.");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Error connecting to the server.");
+  }
+
+  // Hide spinner
+  document.getElementById("spinner").style.display = "none";
+  document.getElementById("studentSubmit").disabled = false;
+};
