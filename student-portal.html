@@ -41,6 +41,9 @@
       <p><strong>Batch:</strong> <span id="studentBatch"></span></p>
       <p><strong>Contact:</strong> <span id="studentContact"></span></p>
       <p><strong>Address:</strong> <span id="studentAdd"></span></p>
+      <p><strong>Course Fees:</strong> <span id="studentfee"></span></p>
+      <p><strong>Fees Paid:</strong> <span id="studentpaid"></span></p>
+      <p><strong>Fees Due:</strong> <span id="studentdue"></span></p>
     </div>
     <button id="logoutBtn" class="btn" style="margin-top:20px;">Logout</button>
   </div>
@@ -56,6 +59,9 @@
       document.getElementById("studentBatch").textContent = student.batch;
       document.getElementById("studentContact").textContent = student.contact;
       document.getElementById("studentAdd").textContent = student.address;
+      document.getElementById("studentfee").textContent = student.course_fee;
+      document.getElementById("studentpaid").textContent = student.paid;
+      document.getElementById("studentdue").textContent = student.due;
     }
 
     document.getElementById("logoutBtn").onclick = () => {
