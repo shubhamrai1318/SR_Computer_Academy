@@ -81,22 +81,22 @@ window.addEventListener('click', (e) => {
   if (e.target == modal) modal.style.display = 'none';
 });
 
-// ===== Contact Form Submission =====
-const form = document.getElementById('contactForm');
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const name = form.querySelector('input[placeholder="Your Name"]').value;
-  const email = form.querySelector('input[placeholder="Your Email"]').value;
-  const phone = form.querySelector('input[placeholder="Phone Number"]').value;
-  const message = form.querySelector('textarea').value;
+// // ===== Contact Form Submission =====
+// const form = document.getElementById('contactForm');
+// form.addEventListener('submit', (e) => {
+//   e.preventDefault();
+//   const name = form.querySelector('input[placeholder="Your Name"]').value;
+//   const email = form.querySelector('input[placeholder="Your Email"]').value;
+//   const phone = form.querySelector('input[placeholder="Phone Number"]').value;
+//   const message = form.querySelector('textarea').value;
 
-  if(name && email && phone && message){
-    alert(`Thank you, ${name}! Your message has been sent successfully.`);
-    form.reset();
-  } else {
-    alert("Please fill out all fields before submitting.");
-  }
-});
+//   if(name && email && phone && message){
+//     // alert(`Thank you, ${name}! Your message has been sent successfully.`);
+//     form.reset();
+//   } else {
+//     alert("Please fill out all fields before submitting.");
+//   }
+// });
 
 // ===== Smooth Scrolling for Navbar =====
 document.querySelectorAll('.nav-links a').forEach(link => {

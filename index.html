@@ -167,7 +167,7 @@
   </section>
 
   <!-- ===== Contact Section ===== -->
-  <section id="contact" class="contact">
+  <!-- <section id="contact" class="contact">
     <div class="container" data-aos="fade-up">
       <h2>Contact Us</h2>
       <div class="contact-container">
@@ -186,7 +186,32 @@
         </div>
       </div>
     </div>
+  </section> -->
+  <section id="contact" class="contact">
+    <div class="container" data-aos="fade-up">
+      <h2>Contact Us</h2>
+      <div class="contact-container">
+        <form id="contactForm">
+          <input type="text" name="name" placeholder="Your Name" required />
+          <input type="email" name="email" placeholder="Your Email" required />
+          <input type="text" name="phone" placeholder="Phone Number" required />
+          <textarea name="message" placeholder="Your Message" required></textarea>
+          <button type="submit" class="btn" id="submitBtn">
+            <span class="btn-text">Send Message</span>
+            <span class="spinner" style="display:none;"></span>
+          </button>
+        </form>
+  
+        <div class="contact-info">
+          <h3>Get in Touch</h3>
+          <p><strong>Address:</strong> SR Study Library Near Petrol Pump Reotipur Ghazipur</p>
+          <p><strong>Phone:</strong> +91 8808616262</p>
+          <p><strong>Email:</strong> srcomputeracademyrtp@gmail.com</p>
+        </div>
+      </div>
+    </div>
   </section>
+  
 
   <!-- <div class="login-buttons">
     <button id="adminLoginBtn" class="btn small-btn">Admin Login</button>
@@ -223,3 +248,64 @@
   <script src="js/script.js"></script>
 </body>
 </html>
+
+
+<script>
+  // ===== Contact Form Submit =====
+  const scriptURL = "https://script.google.com/macros/s/AKfycbwd7xJ2jO6oc5zqpPjiZCPRc3NJSrymlwKyvpnfKJUIWyjdGY6vNnaq0zAFywLYrqhu/exec";
+  document.getElementById("contactForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const form = e.target;
+  const submitBtn = document.getElementById("submitBtn");
+  const btnText = submitBtn.querySelector(".btn-text");
+  const spinner = submitBtn.querySelector(".spinner");
+
+  // Prepare form data
+  const formData = new FormData(form);
+  const formObject = Object.fromEntries(formData.entries());
+
+  // Show spinner
+  btnText.textContent = "Sending...";
+  spinner.style.display = "inline-block";
+  submitBtn.classList.add("sending");
+  submitBtn.disabled = true;
+
+  try {
+    const response = await fetch(scriptURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(formObject).toString(),
+    });
+
+    const text = await response.text();
+
+    // Success visual
+    btnText.textContent = "✅ Message Sent!";
+    spinner.style.display = "none";
+    submitBtn.style.background = "#2ecc71";
+
+    // Reset form after delay
+    setTimeout(() => {
+      form.reset();
+      submitBtn.disabled = false;
+      btnText.textContent = "Send Message";
+      submitBtn.style.background = "";
+      submitBtn.classList.remove("sending");
+    }, 2500);
+  } catch (error) {
+    console.error("Error!", error.message);
+    btnText.textContent = "❌ Error!";
+    spinner.style.display = "none";
+    submitBtn.style.background = "#e74c3c";
+
+    // Reset after error
+    setTimeout(() => {
+      submitBtn.disabled = false;
+      btnText.textContent = "Send Message";
+      submitBtn.style.background = "";
+      submitBtn.classList.remove("sending");
+    }, 2500);
+  }
+});
+</script>

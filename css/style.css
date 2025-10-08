@@ -381,6 +381,34 @@ textarea {
 .contact-info p {
   margin-bottom: 10px;
 }
+/* ===== Contact Form Button Spinner ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+}
+
+.spinner {
+  border: 3px solid #fff;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Optional: disable visual while sending */
+.btn.sending {
+  background: #2179b8 !important;
+  opacity: 0.8;
+  cursor: not-allowed;
+}
 
 /* ===== Footer ===== */
 footer {
