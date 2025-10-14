@@ -134,9 +134,9 @@ window.onclick = (event) => {
 document.getElementById("adminSubmit").onclick = () => {
   const user = document.getElementById("adminUser").value.trim();
   const pass = document.getElementById("adminPass").value.trim();
-  if (user === "admin" && pass === "admin") {
+  if (user === "admin" && pass === "adminsrca") {
     alert("Welcome Admin!");
-    window.location.href = "student-portal.html";
+    window.location.href = "admin-dashboard.html";
   } else {
     alert("Invalid admin credentials.");
   }
