@@ -1,0 +1,394 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | SR Study Library</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #f3f6fb;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #3498db;
+      color: #fff;
+      padding: 15px 20px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 30px auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      overflow-x: auto;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    #searchBar {
+      width: 100%;
+      max-width: 300px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background: #3498db;
+      color: white;
+      cursor: pointer;
+    }
+
+    tr:hover {
+      background: #f8f9ff;
+    }
+
+    .logout-btn {
+      background: #e74c3c;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      float: right;
+    }
+    .logout-btn:hover {
+      background: #c0392b;
+    }
+
+    @media(max-width:768px){
+      table {
+        font-size: 12px;
+      }
+      th, td {
+        padding: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    SR Study Library Admin Dashboard
+    <button class="logout-btn" id="logoutBtn">Logout</button>
+  </header>
+
+  <div class="container">
+    <h2>Student Records</h2>
+    <input type="text" id="searchBar" placeholder="Search student by name or course..." />
+
+    <div id="tableContainer">
+      <p>Loading student data...</p>
+    </div>
+  </div>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbw00d-hkEhA3iUinaeKaSFvHFOfN6Ig43cXSFE_jWQ55tsKgGhtd-vv3fSOdYtBYWn_/exec";
+
+    async function loadStudents() {
+      const res = await fetch(scriptURL);
+      const data = await res.json();
+
+      if (data.status === "all") {
+        renderTable(data.students);
+      } else {
+        document.getElementById("tableContainer").innerHTML = "<p>⚠️ Unable to fetch student data.</p>";
+      }
+    }
+
+    function renderTable(students) {
+      if (!students.length) {
+        document.getElementById("tableContainer").innerHTML = "<p>No records found.</p>";
+        return;
+      }
+
+      const headers = Object.keys(students[0]);
+      let tableHTML = "<table><thead><tr>";
+      headers.forEach(h => tableHTML += `<th>${h.toUpperCase()}</th>`);
+      tableHTML += "</tr></thead><tbody>";
+
+      students.forEach(stu => {
+        tableHTML += "<tr>";
+        headers.forEach(h => tableHTML += `<td>${stu[h] || "-"}</td>`);
+        tableHTML += "</tr>";
+      });
+
+      tableHTML += "</tbody></table>";
+      document.getElementById("tableContainer").innerHTML = tableHTML;
+
+      // Add search functionality
+      document.getElementById("searchBar").addEventListener("input", (e) => {
+        const searchValue = e.target.value.toLowerCase();
+        const filtered = students.filter(stu =>
+          (stu.name && stu.name.toLowerCase().includes(searchValue)) ||
+          (stu.course && stu.course.toLowerCase().includes(searchValue))
+        );
+        renderTable(filtered);
+      });
+    }
+
+    document.getElementById("logoutBtn").onclick = () => {
+      window.location.href = "index.html";
+    };
+
+    loadStudents();
+  </script>
+</body>
+</html>
+ -->
+
+
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | SR Study Library</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #f3f6fb;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #3498db;
+      color: #fff;
+      padding: 15px 20px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 600;
+      position: relative;
+    }
+
+    .logout-btn {
+      background: #e74c3c;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      position: absolute;
+      right: 20px;
+      top: 12px;
+    }
+    .logout-btn:hover {
+      background: #c0392b;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 30px auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      overflow-x: auto;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    #filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    #searchBar, #statusFilter {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    #searchBar {
+      width: 100%;
+      max-width: 300px;
+    }
+
+    #statusFilter {
+      width: 150px;
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background: #3498db;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    tr:hover {
+      background: #f8f9ff;
+    }
+
+    @media(max-width:768px){
+      table {
+        font-size: 12px;
+      }
+      th, td {
+        padding: 6px;
+      }
+      #filters {
+        flex-direction: column;
+      }
+      #statusFilter {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    SR Study Library Admin Dashboard
+    <button class="logout-btn" id="logoutBtn">Logout</button>
+  </header>
+
+  <div class="container">
+    <h2>Student Records</h2>
+    <div id="filters">
+      <input type="text" id="searchBar" placeholder="Search by name or course..." />
+      <select id="statusFilter">
+        <option value="all">All Status</option>
+        <option value="Active">Active</option>
+        <option value="Inactive">Inactive</option>
+      </select>
+    </div>
+    <div id="tableContainer">
+      <p>Loading student data...</p>
+    </div>
+  </div>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbw00d-hkEhA3iUinaeKaSFvHFOfN6Ig43cXSFE_jWQ55tsKgGhtd-vv3fSOdYtBYWn_/exec";
+    let allStudents = [];
+
+    async function loadStudents() {
+      try {
+        const res = await fetch(scriptURL);
+        const data = await res.json();
+
+        if (data.status === "all" && Array.isArray(data.students)) {
+          // Filter out invalid entries (username = "-" or blank)
+          allStudents = data.students.filter(stu => stu.username && stu.username.trim() !== "-" && stu.username.trim() !== "");
+          renderTable(allStudents);
+        } else {
+          document.getElementById("tableContainer").innerHTML = "<p>⚠️ Unable to fetch student data.</p>";
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        document.getElementById("tableContainer").innerHTML = "<p>⚠️ Error loading data. Please try again later.</p>";
+      }
+    }
+
+    function renderTable(students) {
+      if (!students.length) {
+        document.getElementById("tableContainer").innerHTML = "<p>No records found.</p>";
+        return;
+      }
+
+      const headers = Object.keys(students[0]);
+      let tableHTML = "<table><thead><tr>";
+      headers.forEach(h => {
+        tableHTML += `<th onclick="sortTable('${h}')">${h.toUpperCase()}</th>`;
+      });
+      tableHTML += "</tr></thead><tbody>";
+
+      students.forEach(stu => {
+        tableHTML += "<tr>";
+        headers.forEach(h => {
+          tableHTML += `<td>${stu[h] || "-"}</td>`;
+        });
+        tableHTML += "</tr>";
+      });
+
+      tableHTML += "</tbody></table>";
+      document.getElementById("tableContainer").innerHTML = tableHTML;
+    }
+
+    // 🔍 Search + Filter combined
+    function applyFilters() {
+      const searchValue = document.getElementById("searchBar").value.toLowerCase();
+      const statusValue = document.getElementById("statusFilter").value;
+
+      const filtered = allStudents.filter(stu => {
+        const matchesSearch =
+          (stu.name && stu.name.toLowerCase().includes(searchValue)) ||
+          (stu.course && stu.course.toLowerCase().includes(searchValue));
+        const matchesStatus =
+          statusValue === "all" || (stu.status && stu.status.toLowerCase() === statusValue.toLowerCase());
+        return matchesSearch && matchesStatus;
+      });
+
+      renderTable(filtered);
+    }
+
+    document.getElementById("searchBar").addEventListener("input", applyFilters);
+    document.getElementById("statusFilter").addEventListener("change", applyFilters);
+
+    // 🔄 Sorting
+    function sortTable(column) {
+      const th = document.querySelector(`th[onclick="sortTable('${column}')"]`);
+      const isAsc = th?.dataset.order !== "asc";
+      allStudents.sort((a, b) => {
+        const valA = (a[column] || "").toString().toLowerCase();
+        const valB = (b[column] || "").toString().toLowerCase();
+        return isAsc ? valA.localeCompare(valB) : valB.localeCompare(valA);
+      });
+      document.querySelectorAll("th").forEach(th => delete th.dataset.order);
+      th.dataset.order = isAsc ? "asc" : "desc";
+      applyFilters(); // refresh with filters active
+    }
+
+    // 🔒 Logout
+    document.getElementById("logoutBtn").onclick = () => {
+      window.location.href = "index.html";
+    };
+
+    // 🚀 Load data
+    loadStudents();
+  </script>
+</body>
+</html>
