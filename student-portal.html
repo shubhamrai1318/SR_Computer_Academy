@@ -164,10 +164,12 @@
 
 <body>
   <div class="portal-container">
-    <h2>Welcome, <span id="studentName"></span> 👋</h2>
+    <h2>Hi,<b></b> <span id="studentName"></span><b></b> 👋 <br>Welcome to <br>SR Computer Academy <br>Student Portal</h2>
 
     <div class="info-box">
       <p><strong>Username:</strong> <span id="studentUsername"></span></p>
+      <p><strong>Father Name:</strong> <span id="studentFather"></span></p>
+      <p><strong>Addmission Date:</strong> <span id="studentDOA"></span></p>
       <p><strong>Course:</strong> <span id="studentCourse"></span></p>
       <p><strong>Batch:</strong> <span id="studentBatch"></span></p>
       <p><strong>Contact:</strong> <span id="studentContact"></span></p>
@@ -212,6 +214,8 @@
     } else {
       document.getElementById("studentName").textContent = student.name;
       document.getElementById("studentUsername").textContent = student.username;
+      document.getElementById("studentFather").textContent = student.father_name;
+      document.getElementById("studentDOA").textContent = student.add_date;
       document.getElementById("studentCourse").textContent = student.course;
       document.getElementById("studentBatch").textContent = student.batch;
       document.getElementById("studentContact").textContent = student.contact || "-";
@@ -246,7 +250,7 @@
         batch: student.batch
       };
 
-      const scriptURL = "https://script.google.com/macros/s/AKfycbwmVSBOtJCNe8A0zqyFxe5OuaorpxNxZL2eBNzlcEkhu_x4-srxwQ4TvMljpD43tia_/exec";
+      const scriptURL = "https://script.google.com/macros/s/AKfycbzo14PjClhfsdFRg3h7GoqrEXb0nsbYz5cOaWW1XTShaue7sn5-V4fQ0sxsZFzoUuf9/exec";
 
       try {
         await fetch(scriptURL, {
