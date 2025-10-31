@@ -3,80 +3,132 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Portal | SR Study Library</title>
+  <title>SR Computer Academy | Student Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0;
       font-family: "Poppins", sans-serif;
       background: linear-gradient(135deg, #00c6ff, #0072ff);
       min-height: 100vh;
       display: flex;
-      justify-content: center;
-      align-items: center;
       color: #333;
     }
 
-    /* Card Container */
-    .portal-container {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(12px);
-      border-radius: 20px;
-      padding: 40px;
-      width: 90%;
-      max-width: 650px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-      animation: fadeIn 1s ease;
+    /* ===== Sidebar ===== */
+    .sidebar {
+      width: 260px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+    .sidebar h2 {
+      margin-bottom: 30px;
+      color: #fff;
       text-align: center;
     }
-
-    h2 {
-      color: #0072ff;
-      margin-bottom: 15px;
+    .sidebar button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(45deg, #00c6ff, #0072ff);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .sidebar button.logout {
+      background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    }
+    .sidebar button:hover {
+      transform: scale(1.05);
     }
 
+    /* ===== Main Dashboard ===== */
+    .main {
+      flex: 1;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 25px 0 0 25px;
+      overflow-y: auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+    .header h2 {
+      color: #0072ff;
+      font-weight: 700;
+    }
+
+    /* ===== Info Cards ===== */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+    }
+    .card h3 {
+      color: #0072ff;
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    /* ===== Fee Progress ===== */
+    .progress-bar {
+      height: 12px;
+      background: #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .progress {
+      height: 100%;
+      background: linear-gradient(45deg, #00c6ff, #0072ff);
+      border-radius: 10px;
+      transition: width 1s ease-in-out;
+    }
+
+    /* ===== Info Table ===== */
     .info-box {
-      text-align: left;
+      margin-top: 30px;
       background: #f9fbff;
       padding: 20px;
       border-radius: 12px;
       box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
-      margin-top: 20px;
-      animation: slideUp 1s ease;
     }
-
     .info-box p {
-      font-size: 16px;
-      margin: 10px 0;
+      font-size: 15px;
+      margin: 8px 0;
       display: flex;
       justify-content: space-between;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
     }
 
-    .btn {
-      background: linear-gradient(45deg, #00c6ff, #0072ff);
-      color: #fff;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 50px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: 0.4s;
-      margin: 10px;
-    }
-    .btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 10px rgba(0, 114, 255, 0.6);
-    }
-
-    .btn.logout {
-      background: linear-gradient(45deg, #ff416c, #ff4b2b);
-    }
-
-    /* Popup Form */
+    /* ===== Popup ===== */
     .popup {
       display: none;
       position: fixed;
@@ -85,9 +137,7 @@
       justify-content: center;
       align-items: center;
       z-index: 1000;
-      animation: fadeIn 0.5s ease;
     }
-
     .popup-content {
       background: #fff;
       border-radius: 16px;
@@ -95,113 +145,89 @@
       max-width: 500px;
       padding: 30px;
       position: relative;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-      animation: popUp 0.5s ease;
     }
-
     .popup-content h3 {
-      color: #0072ff;
       text-align: center;
-      margin-bottom: 15px;
+      color: #0072ff;
     }
-
     label {
-      font-weight: 600;
       display: block;
       margin-top: 12px;
+      font-weight: 600;
     }
-
     input {
       width: 100%;
       padding: 10px;
       border-radius: 8px;
       border: 1px solid #ccc;
       margin-top: 5px;
-      transition: 0.3s;
     }
-
-    input:focus {
-      border-color: #0072ff;
-      outline: none;
-      box-shadow: 0 0 5px rgba(0, 114, 255, 0.4);
-    }
-
     .close {
       position: absolute;
       top: 15px;
       right: 20px;
       font-size: 22px;
-      color: #999;
       cursor: pointer;
-      transition: 0.3s;
-    }
-    .close:hover {
-      color: #000;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes slideUp {
-      from { transform: translateY(40px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    @keyframes popUp {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    @media (max-width: 600px) {
-      .portal-container { padding: 25px; }
-      .info-box p { font-size: 14px; }
-      .btn { padding: 10px 20px; }
     }
   </style>
 </head>
-
 <body>
-  <div class="portal-container">
-    <h2>Hi,<b></b> <span id="studentName"></span><b></b> 👋 <br>Welcome to <br>SR Computer Academy <br>Student Portal</h2>
+  <div class="sidebar">
+    <h2>👨‍🎓 SR Portal</h2>
+    <button id="homeBtn">🏠 Home</button>
+    <button id="updateBtn">✏️ Update Details</button>
+    <button id="logoutBtn" class="logout">🚪 Logout</button>
+  </div>
+
+  <div class="main">
+    <div class="header">
+      <h2>Welcome, <span id="studentName"></span> 👋</h2>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Total Fees</h3>
+        <p>₹ <span id="studentfee"></span></p>
+      </div>
+      <div class="card">
+        <h3>Paid</h3>
+        <p>₹ <span id="studentpaid"></span></p>
+      </div>
+      <div class="card">
+        <h3>Due</h3>
+        <p>₹ <span id="studentdue"></span></p>
+        <div class="progress-bar">
+          <div id="feeProgress" class="progress"></div>
+        </div>
+      </div>
+    </div>
 
     <div class="info-box">
       <p><strong>Username:</strong> <span id="studentUsername"></span></p>
       <p><strong>Father Name:</strong> <span id="studentFather"></span></p>
-      <p><strong>Addmission Date:</strong> <span id="studentDOA"></span></p>
+      <p><strong>Admission Date:</strong> <span id="studentDOA"></span></p>
       <p><strong>Course:</strong> <span id="studentCourse"></span></p>
       <p><strong>Batch:</strong> <span id="studentBatch"></span></p>
       <p><strong>Contact:</strong> <span id="studentContact"></span></p>
       <p><strong>Address:</strong> <span id="studentAdd"></span></p>
-      <p><strong>Course Fees:</strong> <span id="studentfee"></span></p>
-      <p><strong>Fees Paid:</strong> <span id="studentpaid"></span></p>
-      <p><strong>Fees Due:</strong> <span id="studentdue"></span></p>
     </div>
-
-    <button id="updateBtn" class="btn">✏️ Update Details</button>
-    <button id="logoutBtn" class="btn logout">🚪 Logout</button>
   </div>
 
-  <!-- Popup Form -->
+  <!-- Popup -->
   <div class="popup" id="updatePopup">
     <div class="popup-content">
       <span class="close" id="closePopup">&times;</span>
       <h3>Update Your Details</h3>
       <form id="updateForm">
         <label>Full Name</label>
-        <input type="text" id="name" required />
-
+        <input type="text" id="name" required>
         <label>Address</label>
-        <input type="text" id="address" required />
-
+        <input type="text" id="address" required>
         <label>Contact Number</label>
-        <input type="text" id="contact" required />
-
+        <input type="text" id="contact" required>
         <label>Fees Paid</label>
-        <input type="number" id="paid" required />
-
-        <button type="submit" class="btn" style="width:100%;margin-top:15px;">Submit Details</button>
+        <input type="number" id="paid" required>
+        <button type="submit" style="margin-top:15px;width:100%;padding:12px;background:#0072ff;color:#fff;border:none;border-radius:8px;cursor:pointer;">Submit</button>
       </form>
     </div>
   </div>
@@ -220,10 +246,22 @@
       document.getElementById("studentBatch").textContent = student.batch;
       document.getElementById("studentContact").textContent = student.contact || "-";
       document.getElementById("studentAdd").textContent = student.address || "-";
-      document.getElementById("studentfee").textContent = student.course_fee || "-";
-      document.getElementById("studentpaid").textContent = student.paid || "-";
-      document.getElementById("studentdue").textContent = student.due || "-";
+      document.getElementById("studentfee").textContent = student.course_fee || "0";
+      document.getElementById("studentpaid").textContent = student.paid || "0";
+      document.getElementById("studentdue").textContent = student.due || "0";
+
+      // Fee Progress
+      const total = parseFloat(student.course_fee) || 0;
+      const paid = parseFloat(student.paid) || 0;
+      const percent = total ? (paid / total) * 100 : 0;
+      document.getElementById("feeProgress").style.width = percent + "%";
     }
+
+    // ===== Popup Logic =====
+    const popup = document.getElementById("updatePopup");
+    document.getElementById("updateBtn").onclick = () => popup.style.display = "flex";
+    document.getElementById("closePopup").onclick = () => popup.style.display = "none";
+    window.onclick = (e) => { if (e.target === popup) popup.style.display = "none"; };
 
     // ===== Logout =====
     document.getElementById("logoutBtn").onclick = () => {
@@ -231,13 +269,12 @@
       window.location.href = "index.html";
     };
 
-    // ===== Popup Control =====
-    const popup = document.getElementById("updatePopup");
-    document.getElementById("updateBtn").onclick = () => popup.style.display = "flex";
-    document.getElementById("closePopup").onclick = () => popup.style.display = "none";
-    window.onclick = (e) => { if (e.target === popup) popup.style.display = "none"; };
+    // ===== Home Button =====
+    document.getElementById("homeBtn").onclick = () => {
+      window.location.href = "index.html";
+    };
 
-    // ===== Google Sheet Integration =====
+    // ===== Submit Update =====
     document.getElementById("updateForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const data = {
@@ -245,24 +282,16 @@
         address: document.getElementById("address").value,
         contact: document.getElementById("contact").value,
         paid: document.getElementById("paid").value,
-        username: student.username,
-        course: student.course,
-        batch: student.batch
+        username: student.username
       };
-
       const scriptURL = "https://script.google.com/macros/s/AKfycbzo14PjClhfsdFRg3h7GoqrEXb0nsbYz5cOaWW1XTShaue7sn5-V4fQ0sxsZFzoUuf9/exec";
-
       try {
-        await fetch(scriptURL, {
-          method: "POST",
-          body: new URLSearchParams(data),
-        });
-        alert("✅ Details submitted successfully!");
+        await fetch(scriptURL, { method: "POST", body: new URLSearchParams(data) });
+        alert("✅ Details updated successfully!");
         popup.style.display = "none";
         document.getElementById("updateForm").reset();
-      } catch (error) {
+      } catch (err) {
         alert("❌ Error submitting details. Try again later.");
-        console.error(error);
       }
     });
   </script>

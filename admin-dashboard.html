@@ -1,220 +1,157 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard | SR Study Library</title>
-  <link rel="stylesheet" href="css/style.css" />
   <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      background: #f3f6fb;
-      margin: 0;
-      padding: 0;
+    :root {
+      --primary: #007bff;
+      --primary-dark: #0056b3;
+      --accent: #00c4ff;
+      --bg: #f5f8ff;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --sidebar-bg: rgba(0, 123, 255, 0.9);
+      --text-dark: #2c3e50;
+      --text-light: #fff;
     }
 
-    header {
-      background: #3498db;
-      color: #fff;
-      padding: 15px 20px;
+    body.dark {
+      --bg: #0d1117;
+      --card-bg: rgba(22, 27, 34, 0.9);
+      --sidebar-bg: rgba(1, 30, 64, 0.95);
+      --text-dark: #f0f6fc;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: var(--bg);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      transition: background 0.3s ease;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 250px;
+      background: var(--sidebar-bg);
+      color: var(--text-light);
+      display: flex;
+      flex-direction: column;
+      padding: 25px 20px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(14px);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar h2 {
       text-align: center;
       font-size: 22px;
-      font-weight: 600;
+      margin-bottom: 30px;
+      letter-spacing: 0.5px;
     }
 
-    .container {
-      max-width: 1200px;
-      margin: 30px auto;
-      background: #fff;
+    .sidebar a {
+      text-decoration: none;
+      color: var(--text-light);
+      padding: 12px 15px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      padding: 20px;
-      overflow-x: auto;
+      margin: 5px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.25s ease;
     }
 
-    h2 {
-      color: #333;
-      margin-bottom: 15px;
+    .sidebar a:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateX(6px);
     }
 
-    #searchBar {
-      width: 100%;
-      max-width: 300px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      margin-bottom: 20px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 14px;
-    }
-
-    th, td {
-      padding: 10px;
-      border-bottom: 1px solid #eee;
-    }
-
-    th {
-      background: #3498db;
+    .theme-toggle {
+      margin-top: auto;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
       color: white;
+      padding: 10px;
+      border-radius: 8px;
       cursor: pointer;
+      transition: 0.3s;
     }
 
-    tr:hover {
-      background: #f8f9ff;
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.35);
     }
 
-    .logout-btn {
-      background: #e74c3c;
+    .toggle-btn {
+      display: none;
+      background: var(--primary);
       color: #fff;
       border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
+      font-size: 20px;
+      padding: 8px 12px;
+      border-radius: 8px;
       cursor: pointer;
-      float: right;
-    }
-    .logout-btn:hover {
-      background: #c0392b;
-    }
-
-    @media(max-width:768px){
-      table {
-        font-size: 12px;
-      }
-      th, td {
-        padding: 6px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <header>
-    SR Study Library Admin Dashboard
-    <button class="logout-btn" id="logoutBtn">Logout</button>
-  </header>
-
-  <div class="container">
-    <h2>Student Records</h2>
-    <input type="text" id="searchBar" placeholder="Search student by name or course..." />
-
-    <div id="tableContainer">
-      <p>Loading student data...</p>
-    </div>
-  </div>
-
-  <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbw00d-hkEhA3iUinaeKaSFvHFOfN6Ig43cXSFE_jWQ55tsKgGhtd-vv3fSOdYtBYWn_/exec";
-
-    async function loadStudents() {
-      const res = await fetch(scriptURL);
-      const data = await res.json();
-
-      if (data.status === "all") {
-        renderTable(data.students);
-      } else {
-        document.getElementById("tableContainer").innerHTML = "<p>⚠️ Unable to fetch student data.</p>";
-      }
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 1000;
     }
 
-    function renderTable(students) {
-      if (!students.length) {
-        document.getElementById("tableContainer").innerHTML = "<p>No records found.</p>";
-        return;
-      }
-
-      const headers = Object.keys(students[0]);
-      let tableHTML = "<table><thead><tr>";
-      headers.forEach(h => tableHTML += `<th>${h.toUpperCase()}</th>`);
-      tableHTML += "</tr></thead><tbody>";
-
-      students.forEach(stu => {
-        tableHTML += "<tr>";
-        headers.forEach(h => tableHTML += `<td>${stu[h] || "-"}</td>`);
-        tableHTML += "</tr>";
-      });
-
-      tableHTML += "</tbody></table>";
-      document.getElementById("tableContainer").innerHTML = tableHTML;
-
-      // Add search functionality
-      document.getElementById("searchBar").addEventListener("input", (e) => {
-        const searchValue = e.target.value.toLowerCase();
-        const filtered = students.filter(stu =>
-          (stu.name && stu.name.toLowerCase().includes(searchValue)) ||
-          (stu.course && stu.course.toLowerCase().includes(searchValue))
-        );
-        renderTable(filtered);
-      });
-    }
-
-    document.getElementById("logoutBtn").onclick = () => {
-      window.location.href = "index.html";
-    };
-
-    loadStudents();
-  </script>
-</body>
-</html>
- -->
-
-
-
- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard | SR Study Library</title>
-  <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      background: #f3f6fb;
-      margin: 0;
-      padding: 0;
+    /* MAIN AREA */
+    .main {
+      flex: 1;
+      padding: 20px 25px;
+      overflow-y: auto;
+      transition: 0.3s;
     }
 
     header {
-      background: #3498db;
-      color: #fff;
-      padding: 15px 20px;
-      text-align: center;
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 18px 25px;
       font-size: 22px;
       font-weight: 600;
-      position: relative;
+      color: var(--text-dark);
+      margin-bottom: 25px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
-    .logout-btn {
+    header button {
       background: #e74c3c;
-      color: #fff;
+      color: white;
       border: none;
-      padding: 8px 16px;
       border-radius: 6px;
+      padding: 8px 14px;
       cursor: pointer;
-      position: absolute;
-      right: 20px;
-      top: 12px;
+      transition: 0.3s;
     }
-    .logout-btn:hover {
+
+    header button:hover {
       background: #c0392b;
     }
 
     .container {
-      max-width: 1200px;
-      margin: 30px auto;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
       padding: 20px;
+      backdrop-filter: blur(10px);
       overflow-x: auto;
+      white-space: nowrap;
     }
 
     h2 {
-      color: #333;
-      margin-bottom: 15px;
+      color: var(--text-dark);
+      font-size: 20px;
+      margin-bottom: 10px;
     }
 
     #filters {
@@ -225,101 +162,176 @@
     }
 
     #searchBar, #statusFilter {
-      padding: 10px;
+      padding: 10px 12px;
       border: 1px solid #ccc;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 14px;
     }
 
     #searchBar {
-      width: 100%;
-      max-width: 300px;
+      flex: 1;
+      min-width: 200px;
     }
 
     #statusFilter {
-      width: 150px;
-      background: #fff;
+      width: 160px;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      text-align: left;
       font-size: 14px;
-    }
-
-    th, td {
-      padding: 10px;
-      border-bottom: 1px solid #eee;
+      border-radius: 10px;
+      overflow: hidden;
+      min-width: 700px;
     }
 
     th {
-      background: #3498db;
-      color: white;
+      background: var(--primary);
+      color: #fff;
+      text-align: left;
+      padding: 12px;
       cursor: pointer;
-      user-select: none;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      color: var(--text-dark);
     }
 
     tr:hover {
-      background: #f8f9ff;
+      background: rgba(0, 123, 255, 0.08);
+      transition: 0.3s;
     }
 
-    @media(max-width:768px){
+    .pagination {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .pagination button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      margin: 3px;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .pagination button:hover {
+      background: var(--primary-dark);
+    }
+
+    .pagination button.active {
+      background: var(--primary-dark);
+    }
+
+    .download-btn {
+      background: var(--accent);
+      border: none;
+      padding: 8px 14px;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-left: 10px;
+      font-size: 14px;
+    }
+
+    .download-btn:hover {
+      background: #00a0cc;
+    }
+
+    /* MOBILE */
+    @media(max-width: 768px) {
+      .sidebar {
+        position: fixed;
+        left: -260px;
+        top: 0;
+        bottom: 0;
+        z-index: 999;
+      }
+
+      .sidebar.active {
+        left: 0;
+      }
+
+      .toggle-btn {
+        display: block;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
       table {
         font-size: 12px;
-      }
-      th, td {
-        padding: 6px;
-      }
-      #filters {
-        flex-direction: column;
-      }
-      #statusFilter {
-        width: 100%;
+        min-width: 600px;
       }
     }
   </style>
 </head>
-<body>
-  <header>
-    SR Study Library Admin Dashboard
-    <button class="logout-btn" id="logoutBtn">Logout</button>
-  </header>
 
-  <div class="container">
-    <h2>Student Records</h2>
-    <div id="filters">
-      <input type="text" id="searchBar" placeholder="Search by name or course..." />
-      <select id="statusFilter">
-        <option value="all">All Status</option>
-        <option value="Active">Active</option>
-        <option value="Inactive">Inactive</option>
-      </select>
-    </div>
-    <div id="tableContainer">
-      <p>Loading student data...</p>
+<body>
+  <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+
+  <div class="sidebar" id="sidebar">
+    <h2>📘 SR Admin</h2>
+    <a href="index.html">🏠 Home</a>
+    <a href="student-portal.html">🧾 Update Details</a>
+    <a href="#" id="logoutBtn">🚪 Logout</a>
+    <button class="theme-toggle" onclick="toggleTheme()">🌓 Toggle Theme</button>
+  </div>
+
+  <div class="main">
+    <header>
+      <span>Admin Dashboard — Student Records</span>
+      <div>
+        <button class="download-btn" onclick="downloadCSV()">⬇ Download CSV</button>
+        <button id="logoutBtnTop">Logout</button>
+      </div>
+    </header>
+
+    <div class="container">
+      <h2>Student Data Overview</h2>
+      <div id="filters">
+        <input type="text" id="searchBar" placeholder="Search by name or course..." />
+        <select id="statusFilter">
+          <option value="all">All Status</option>
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+      </div>
+
+      <div id="tableContainer"><p>Loading student data...</p></div>
+      <div class="pagination" id="pagination"></div>
     </div>
   </div>
 
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbw00d-hkEhA3iUinaeKaSFvHFOfN6Ig43cXSFE_jWQ55tsKgGhtd-vv3fSOdYtBYWn_/exec";
     let allStudents = [];
+    let currentPage = 1;
+    const rowsPerPage = 10;
 
     async function loadStudents() {
       try {
         const res = await fetch(scriptURL);
         const data = await res.json();
-
         if (data.status === "all" && Array.isArray(data.students)) {
-          // Filter out invalid entries (username = "-" or blank)
-          allStudents = data.students.filter(stu => stu.username && stu.username.trim() !== "-" && stu.username.trim() !== "");
+          allStudents = data.students.filter(stu => stu.username && stu.username.trim() !== "-");
           renderTable(allStudents);
         } else {
           document.getElementById("tableContainer").innerHTML = "<p>⚠️ Unable to fetch student data.</p>";
         }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        document.getElementById("tableContainer").innerHTML = "<p>⚠️ Error loading data. Please try again later.</p>";
+      } catch {
+        document.getElementById("tableContainer").innerHTML = "<p>⚠️ Error loading data.</p>";
       }
     }
 
@@ -330,64 +342,95 @@
       }
 
       const headers = Object.keys(students[0]);
-      let tableHTML = "<table><thead><tr>";
-      headers.forEach(h => {
-        tableHTML += `<th onclick="sortTable('${h}')">${h.toUpperCase()}</th>`;
-      });
-      tableHTML += "</tr></thead><tbody>";
+      const start = (currentPage - 1) * rowsPerPage;
+      const end = start + rowsPerPage;
+      const paginated = students.slice(start, end);
 
-      students.forEach(stu => {
-        tableHTML += "<tr>";
-        headers.forEach(h => {
-          tableHTML += `<td>${stu[h] || "-"}</td>`;
-        });
-        tableHTML += "</tr>";
-      });
+      let html = "<div style='overflow-x:auto;'><table><thead><tr>";
+      headers.forEach(h => html += `<th onclick="sortTable('${h}')">${h.toUpperCase()}</th>`);
+      html += "</tr></thead><tbody>";
 
-      tableHTML += "</tbody></table>";
-      document.getElementById("tableContainer").innerHTML = tableHTML;
+      paginated.forEach(stu => {
+        html += "<tr>";
+        headers.forEach(h => html += `<td>${stu[h] || "-"}</td>`);
+        html += "</tr>";
+      });
+      html += "</tbody></table></div>";
+      document.getElementById("tableContainer").innerHTML = html;
+
+      renderPagination(students.length);
     }
 
-    // 🔍 Search + Filter combined
+    function renderPagination(totalRows) {
+      const totalPages = Math.ceil(totalRows / rowsPerPage);
+      let paginationHTML = "";
+      for (let i = 1; i <= totalPages; i++) {
+        paginationHTML += `<button class="${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+      }
+      document.getElementById("pagination").innerHTML = paginationHTML;
+    }
+
+    function changePage(page) {
+      currentPage = page;
+      applyFilters();
+    }
+
     function applyFilters() {
-      const searchValue = document.getElementById("searchBar").value.toLowerCase();
-      const statusValue = document.getElementById("statusFilter").value;
-
+      const search = document.getElementById("searchBar").value.toLowerCase();
+      const status = document.getElementById("statusFilter").value;
       const filtered = allStudents.filter(stu => {
-        const matchesSearch =
-          (stu.name && stu.name.toLowerCase().includes(searchValue)) ||
-          (stu.course && stu.course.toLowerCase().includes(searchValue));
-        const matchesStatus =
-          statusValue === "all" || (stu.status && stu.status.toLowerCase() === statusValue.toLowerCase());
-        return matchesSearch && matchesStatus;
+        const sMatch = (stu.name && stu.name.toLowerCase().includes(search)) ||
+                       (stu.course && stu.course.toLowerCase().includes(search));
+        const statusMatch = status === "all" ||
+                            (stu.status && stu.status.toLowerCase() === status.toLowerCase());
+        return sMatch && statusMatch;
       });
-
       renderTable(filtered);
     }
 
     document.getElementById("searchBar").addEventListener("input", applyFilters);
     document.getElementById("statusFilter").addEventListener("change", applyFilters);
 
-    // 🔄 Sorting
-    function sortTable(column) {
-      const th = document.querySelector(`th[onclick="sortTable('${column}')"]`);
-      const isAsc = th?.dataset.order !== "asc";
+    function sortTable(col) {
+      const th = document.querySelector(`th[onclick="sortTable('${col}')"]`);
+      const asc = th?.dataset.order !== "asc";
       allStudents.sort((a, b) => {
-        const valA = (a[column] || "").toString().toLowerCase();
-        const valB = (b[column] || "").toString().toLowerCase();
-        return isAsc ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        const va = (a[col] || "").toString().toLowerCase();
+        const vb = (b[col] || "").toString().toLowerCase();
+        return asc ? va.localeCompare(vb) : vb.localeCompare(va);
       });
-      document.querySelectorAll("th").forEach(th => delete th.dataset.order);
-      th.dataset.order = isAsc ? "asc" : "desc";
-      applyFilters(); // refresh with filters active
+      document.querySelectorAll("th").forEach(h => delete h.dataset.order);
+      th.dataset.order = asc ? "asc" : "desc";
+      applyFilters();
     }
 
-    // 🔒 Logout
-    document.getElementById("logoutBtn").onclick = () => {
-      window.location.href = "index.html";
-    };
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("active");
+    }
 
-    // 🚀 Load data
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
+    }
+
+    function downloadCSV() {
+      if (!allStudents.length) return alert("No data to download.");
+      const headers = Object.keys(allStudents[0]);
+      const csv = [
+        headers.join(","),
+        ...allStudents.map(row => headers.map(h => `"${(row[h] || "").replace(/"/g, '""')}"`).join(","))
+      ].join("\n");
+
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "student_records.csv";
+      a.click();
+    }
+
+    document.getElementById("logoutBtn").onclick =
+    document.getElementById("logoutBtnTop").onclick = () => window.location.href = "index.html";
+
     loadStudents();
   </script>
 </body>
