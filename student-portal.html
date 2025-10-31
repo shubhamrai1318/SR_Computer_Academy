@@ -6,31 +6,42 @@
   <title>SR Computer Academy | Student Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #007bff;
+      --primary-dark: #0056b3;
+      --accent: #00c4ff;
+      --bg: linear-gradient(135deg, #00c6ff, #0072ff);
+      --sidebar-bg: rgba(0, 123, 255, 0.85);
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --text-dark: #2c3e50;
+      --text-light: #fff;
+    }
+
     body {
+      margin: 0;
       font-family: "Poppins", sans-serif;
-      background: linear-gradient(135deg, #00c6ff, #0072ff);
-      min-height: 100vh;
+      background: var(--bg);
       display: flex;
-      color: #333;
+      min-height: 100vh;
+      overflow: hidden;
     }
 
     /* ===== Sidebar ===== */
     .sidebar {
-      width: 260px;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(20px);
-      color: #fff;
+      width: 250px;
+      background: var(--sidebar-bg);
+      color: var(--text-light);
       display: flex;
       flex-direction: column;
-      align-items: center;
-      padding: 30px 15px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      padding: 25px 20px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(14px);
     }
     .sidebar h2 {
-      margin-bottom: 30px;
-      color: #fff;
       text-align: center;
+      font-size: 22px;
+      margin-bottom: 30px;
+      letter-spacing: 0.5px;
     }
     .sidebar button {
       width: 100%;
@@ -38,26 +49,43 @@
       padding: 12px;
       border: none;
       border-radius: 8px;
-      background: linear-gradient(45deg, #00c6ff, #0072ff);
+      background: var(--primary);
       color: #fff;
       font-weight: 600;
       cursor: pointer;
       transition: 0.3s;
     }
     .sidebar button.logout {
-      background: linear-gradient(45deg, #ff416c, #ff4b2b);
+      background: #e74c3c;
     }
     .sidebar button:hover {
       transform: scale(1.05);
+      background: var(--primary-dark);
+    }
+
+    .toggle-btn {
+      display: none;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      font-size: 20px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 1000;
     }
 
     /* ===== Main Dashboard ===== */
     .main {
       flex: 1;
-      padding: 30px;
-      background: rgba(255, 255, 255, 0.9);
+      padding: 20px 25px;
+      background: var(--card-bg);
       border-radius: 25px 0 0 25px;
       overflow-y: auto;
+      transition: 0.3s;
     }
 
     .header {
@@ -65,20 +93,22 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 25px;
+      flex-wrap: wrap;
+      gap: 10px;
     }
     .header h2 {
-      color: #0072ff;
+      color: var(--primary);
       font-weight: 700;
     }
 
     /* ===== Info Cards ===== */
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 20px;
     }
     .card {
-      background: rgba(255, 255, 255, 0.85);
+      background: var(--card-bg);
       backdrop-filter: blur(10px);
       padding: 20px;
       border-radius: 16px;
@@ -91,12 +121,11 @@
       box-shadow: 0 5px 25px rgba(0,0,0,0.2);
     }
     .card h3 {
-      color: #0072ff;
-      font-size: 22px;
+      color: var(--primary);
+      font-size: 20px;
       margin-bottom: 10px;
     }
 
-    /* ===== Fee Progress ===== */
     .progress-bar {
       height: 12px;
       background: #ddd;
@@ -111,7 +140,7 @@
       transition: width 1s ease-in-out;
     }
 
-    /* ===== Info Table ===== */
+    /* ===== Info Box ===== */
     .info-box {
       margin-top: 30px;
       background: #f9fbff;
@@ -148,7 +177,8 @@
     }
     .popup-content h3 {
       text-align: center;
-      color: #0072ff;
+      color: var(--primary);
+      margin-bottom: 20px;
     }
     label {
       display: block;
@@ -169,10 +199,35 @@
       font-size: 22px;
       cursor: pointer;
     }
+
+    /* ===== Mobile Responsive ===== */
+    @media(max-width: 768px) {
+      .sidebar {
+        position: fixed;
+        left: -260px;
+        top: 0;
+        bottom: 0;
+        z-index: 999;
+      }
+      .sidebar.active {
+        left: 0;
+      }
+      .toggle-btn {
+        display: block;
+      }
+      .main {
+        border-radius: 0;
+        padding: 15px;
+      }
+      table {
+        font-size: 12px;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="sidebar">
+  <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+  <div class="sidebar" id="sidebar">
     <h2>👨‍🎓 SR Portal</h2>
     <button id="homeBtn">🏠 Home</button>
     <button id="updateBtn">✏️ Update Details</button>
@@ -227,7 +282,7 @@
         <input type="text" id="contact" required>
         <label>Fees Paid</label>
         <input type="number" id="paid" required>
-        <button type="submit" style="margin-top:15px;width:100%;padding:12px;background:#0072ff;color:#fff;border:none;border-radius:8px;cursor:pointer;">Submit</button>
+        <button type="submit" style="margin-top:15px;width:100%;padding:12px;background:var(--primary);color:#fff;border:none;border-radius:8px;cursor:pointer;">Submit</button>
       </form>
     </div>
   </div>
@@ -235,9 +290,9 @@
   <script>
     // ===== Load Student Data =====
     const student = JSON.parse(localStorage.getItem("studentData"));
-    if (!student) {
-      window.location.href = "index.html";
-    } else {
+    if (!student) window.location.href = "index.html";
+
+    else {
       document.getElementById("studentName").textContent = student.name;
       document.getElementById("studentUsername").textContent = student.username;
       document.getElementById("studentFather").textContent = student.father_name;
@@ -250,18 +305,21 @@
       document.getElementById("studentpaid").textContent = student.paid || "0";
       document.getElementById("studentdue").textContent = student.due || "0";
 
-      // Fee Progress
       const total = parseFloat(student.course_fee) || 0;
       const paid = parseFloat(student.paid) || 0;
       const percent = total ? (paid / total) * 100 : 0;
       document.getElementById("feeProgress").style.width = percent + "%";
     }
 
-    // ===== Popup Logic =====
+    // ===== Sidebar Toggle =====
+    const sidebar = document.getElementById("sidebar");
+    function toggleSidebar() { sidebar.classList.toggle("active"); }
+
+    // ===== Popup =====
     const popup = document.getElementById("updatePopup");
     document.getElementById("updateBtn").onclick = () => popup.style.display = "flex";
     document.getElementById("closePopup").onclick = () => popup.style.display = "none";
-    window.onclick = (e) => { if (e.target === popup) popup.style.display = "none"; };
+    window.onclick = e => { if (e.target === popup) popup.style.display = "none"; };
 
     // ===== Logout =====
     document.getElementById("logoutBtn").onclick = () => {
@@ -269,13 +327,11 @@
       window.location.href = "index.html";
     };
 
-    // ===== Home Button =====
-    document.getElementById("homeBtn").onclick = () => {
-      window.location.href = "index.html";
-    };
+    // ===== Home =====
+    document.getElementById("homeBtn").onclick = () => window.location.href = "index.html";
 
     // ===== Submit Update =====
-    document.getElementById("updateForm").addEventListener("submit", async (e) => {
+    document.getElementById("updateForm").addEventListener("submit", async e => {
       e.preventDefault();
       const data = {
         name: document.getElementById("name").value,
@@ -290,7 +346,7 @@
         alert("✅ Details updated successfully!");
         popup.style.display = "none";
         document.getElementById("updateForm").reset();
-      } catch (err) {
+      } catch {
         alert("❌ Error submitting details. Try again later.");
       }
     });
