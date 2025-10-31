@@ -3,200 +3,256 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SR Computer Academy & SR Study Library</title>
+  <title>SR Computer Academy & SR Study Library — Reotipur, Ghazipur</title>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- AOS Library for scroll animations -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 
   <style>
     :root{
-      --bg: #f7fbff;
+      --bg: #f5faff;           /* Very light blue background */
       --card: #ffffff;
-      --accent-1: #007bff;   /* deep blue */
-      --accent-2: #00c6ff;   /* teal */
+      --accent-1: #0077ff;   /* Vivid Blue */
+      --accent-2: #00b3e6;   /* Bright Teal */
       --muted: #6b7280;
-      --glass: rgba(255,255,255,0.65);
-      --radius: 14px;
-      --shadow-sm: 0 6px 18px rgba(22, 61, 120, 0.08);
+      --heading: #05204a;
+      --glass: rgba(255,255,255,0.9);
+      --radius: 16px;
+      --shadow-sm: 0 8px 20px rgba(22, 61, 120, 0.08);
+      --shadow-md: 0 16px 40px rgba(0, 123, 255, 0.12);
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%}
     body{
       font-family:'Poppins',sans-serif;
-      background: linear-gradient(180deg, #f4fbff 0%, #f7fbff 100%);
+      background: var(--bg);
       color:#111827;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
-      line-height:1.5;
+      line-height:1.6;
     }
 
     a{color:inherit;text-decoration:none}
-    section{padding:70px 6%}
+    section{padding:90px 6%}
 
     /* Navbar */
     header{
       position:sticky;
       top:0;
       z-index:999;
-      backdrop-filter: blur(6px);
-      background: linear-gradient(90deg, rgba(0,123,255,0.15), rgba(0,198,255,0.06));
-      border-bottom:1px solid rgba(255,255,255,0.3);
+      backdrop-filter: blur(8px);
+      background: var(--glass);
+      border-bottom:1px solid rgba(0,123,255,0.1);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
     }
     .navbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:16px;
-      padding:12px 6%;
+      padding:14px 6%;
       max-width:1200px;
       margin:0 auto;
     }
-    .logo{
-      display:flex;align-items:center;gap:12px;
-    }
-    .logo img{width:52px;height:52px;border-radius:8px;object-fit:cover;box-shadow:0 6px 20px rgba(0,0,0,0.08)}
-    .logo h2{font-size:1.05rem;color:var(--accent-1);margin:0;font-weight:700}
-    .nav-links{display:flex;align-items:center;gap:18px;list-style:none}
-    .nav-links a{font-weight:600;color:var(--muted);padding:8px 12px;border-radius:10px;transition:all .2s}
-    .nav-links a:hover{background:rgba(0,0,0,0.04);color:#0b2546}
-    .menu-toggle{display:none;font-size:22px;cursor:pointer;color:var(--accent-1)}
+    .logo{display:flex;align-items:center;gap:12px;cursor:pointer;}
+    .logo img{width:48px;height:48px;border-radius:10px;object-fit:cover;box-shadow:var(--shadow-sm)}
+    .logo h2{font-size:1.15rem;color:var(--accent-1);margin:0;font-weight:700;line-height:1.2}
+    .logo div{font-size:11px;color:#0b2546;margin-top:2px;font-weight:500}
+    .nav-links{display:flex;align-items:center;gap:20px;list-style:none}
+    .nav-links a{font-weight:600;color:var(--muted);padding:8px 14px;border-radius:10px;transition:all .3s}
+    .nav-links a:hover{background:rgba(0,123,255,0.06);color:var(--accent-1)}
+    .menu-toggle{display:none;font-size:24px;cursor:pointer;color:var(--accent-1)}
 
-    .login-row{display:flex;gap:10px;align-items:center}
+    .login-row{display:flex;gap:12px;align-items:center}
     .small-btn{
-      padding:8px 14px;border-radius:999px;border:none;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));
-      color:#fff;font-weight:600;cursor:pointer;box-shadow:var(--shadow-sm)
+      padding:10px 18px;border-radius:999px;border:none;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));
+      color:#fff;font-weight:600;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .3s;
+      display:flex;align-items:center;justify-content:center;gap:8px;
     }
-    .small-btn.ghost{background:transparent;color:var(--accent-1);border:1px solid rgba(0,123,255,0.12) }
+    .small-btn:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 10px 25px rgba(0,123,255,0.2)}
+    .small-btn.ghost{background:transparent;color:var(--accent-1);border:1px solid rgba(0,123,255,0.2);box-shadow:none}
+    .small-btn.ghost:hover{background:rgba(0,123,255,0.05);transform:none}
+
+    /* Spinner */
+    .spinner {
+      width: 16px; height: 16px; border: 2px solid #fff; border-top: 2px solid transparent;
+      border-radius: 50%; animation: spin 0.8s linear infinite; flex-shrink: 0;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
     /* Hero */
     .hero{
       display:flex;align-items:center;justify-content:center;
-      min-height:78vh;position:relative;overflow:hidden;
-      background: linear-gradient(180deg, rgba(0,198,255,0.06), rgba(0,123,255,0.03));
+      min-height:90vh;position:relative;overflow:hidden;
+      background: linear-gradient(180deg, #eaf3ff 0%, var(--bg) 100%);
     }
+    /* Subtly animated background shapes for visual appeal */
+    .hero::before{
+      content:'';position:absolute;width:200px;height:200px;
+      background:rgba(0,123,255,0.05);border-radius:50%;top:10%;left:5%;
+      animation:float1 10s infinite ease-in-out;z-index:1;
+    }
+    .hero::after{
+      content:'';position:absolute;width:300px;height:300px;
+      background:rgba(0,179,230,0.04);border-radius:var(--radius);bottom:15%;right:10%;
+      animation:float2 12s infinite ease-in-out;z-index:1;transform:rotate(45deg);
+    }
+    @keyframes float1 { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-20px) translateX(10px); } }
+    @keyframes float2 { 0%,100% { transform:translateY(0) rotate(45deg); } 50% { transform:translateY(20px) translateX(-10px) rotate(42deg); } }
+    
     .hero-inner{
-      max-width:1200px;width:100%;display:grid;grid-template-columns:1fr 420px;gap:36px;padding:36px 6%;
-      align-items:center;
+      max-width:1200px;width:100%;display:grid;grid-template-columns:1fr 400px;gap:40px;padding:40px 6%;
+      align-items:center;z-index:10;
     }
     .hero-card{
-      background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.95));
-      border-radius:20px;padding:30px;box-shadow:var(--shadow-sm);
-      position:relative;overflow:visible;
+      background: var(--glass);
+      border-radius:var(--radius);padding:35px;box-shadow:var(--shadow-md);
+      position:relative;border:1px solid rgba(0,123,255,0.05);
     }
-    .eyebrow{display:inline-block;padding:6px 12px;border-radius:999px;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:#fff;font-weight:700;font-size:0.78rem;margin-bottom:14px}
-    .hero h1{font-size:1.9rem;line-height:1.05;color:#05204a;margin-bottom:12px}
-    .hero p.lead{color:var(--muted);margin-bottom:18px}
-    .hero .cta-row{display:flex;gap:12px;flex-wrap:wrap}
-    .cta{padding:12px 20px;border-radius:12px;font-weight:700;border:none;cursor:pointer}
-    .cta.primary{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:white}
-    .cta.ghost{background:transparent;border:1px solid rgba(11,37,74,0.06);color:var(--accent-1)}
-
+    .eyebrow{display:inline-block;padding:7px 15px;border-radius:999px;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:#fff;font-weight:700;font-size:0.8rem;margin-bottom:16px;letter-spacing:0.5px}
+    .hero h1{font-size:2.4rem;line-height:1.1;color:var(--heading);margin-bottom:14px;font-weight:800}
+    .hero p.lead{color:var(--muted);margin-bottom:25px;font-size:1.1rem}
+    .hero .cta-row{display:flex;gap:14px;flex-wrap:wrap}
+    .cta{padding:14px 28px;border-radius:12px;font-weight:700;border:none;cursor:pointer;transition:all .3s}
+    .cta.primary{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:white;box-shadow:0 8px 20px rgba(0,123,255,0.3)}
+    .cta.primary:hover{transform:translateY(-2px);box-shadow:0 12px 25px rgba(0,123,255,0.4)}
+    
     /* right column: info card */
     .info-card{
-      background: linear-gradient(180deg,#ffffff, #f6fbff);
-      border-radius:16px;padding:20px;box-shadow:0 10px 30px rgba(7,40,89,0.06);
+      background: linear-gradient(180deg,#ffffff, #f9fcff);
+      border-radius:var(--radius);padding:25px;box-shadow:var(--shadow-md);
+      border:1px solid rgba(0,123,255,0.05);transition:transform .3s;
     }
-    .stat-grid{display:flex;gap:12px;align-items:center;justify-content:space-between}
-    .stat{flex:1;text-align:center;padding:10px;background:linear-gradient(180deg,rgba(0,198,255,0.06),rgba(0,123,255,0.03));border-radius:10px}
-    .stat h3{font-size:1.2rem;color:var(--accent-1);margin-bottom:6px}
-    .stat p{font-weight:700;color:#062241}
+    .info-card:hover{transform:translateY(-4px)}
+    .stat-grid{display:flex;gap:16px;align-items:center;justify-content:space-between}
+    .stat{flex:1;text-align:center;padding:15px 10px;background:rgba(0,123,255,0.06);border-radius:12px;transition:transform .3s}
+    .stat:hover{background:rgba(0,123,255,0.1);transform:translateY(-2px)}
+    .stat h3{font-size:1.5rem;color:var(--accent-1);margin-bottom:6px;font-weight:800}
+    .stat p{font-weight:600;color:var(--heading);font-size:0.95rem}
 
     /* About */
-    .about{
-      background:linear-gradient(120deg,#f6faff,#f1fbff);
+    .about{background:linear-gradient(120deg,#f6faff,#f1fbff);}
+    .about-inner{display:grid;grid-template-columns:1fr 520px;gap:40px;align-items:center;max-width:1200px;margin:0 auto;padding:30px 6%}
+    .about .about-text h2{font-size:2rem;color:var(--heading);margin-bottom:18px;font-weight:800}
+    .about .about-text p{color:var(--muted);margin-bottom:18px}
+    .features{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:20px}
+    .feature{display:flex;gap:18px;align-items:flex-start;padding:20px;border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow-sm);transition:transform .3s;border:1px solid rgba(0,0,0,0.03)}
+    .feature:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+    .feature-icon-container{
+        width:50px;height:50px;min-width:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+        background:rgba(0,123,255,0.1);flex-shrink:0;
     }
-    .about-inner{display:grid;grid-template-columns:520px 1fr;gap:28px;align-items:center;max-width:1200px;margin:0 auto;padding:24px 6%}
-    .about .about-text h2{font-size:1.8rem;color:#042047;margin-bottom:12px}
-    .about .about-text p{color:var(--muted);margin-bottom:14px}
-    .features{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
-    .feature{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:12px;background:var(--card);box-shadow:0 6px 18px rgba(4,22,54,0.03)}
-    .feature svg{width:34px;height:34px;flex-shrink:0}
-    .feature strong{display:block;color:#062241}
+    .feature-icon-container svg{width:24px;height:24px;}
+    .feature strong{display:block;color:var(--heading);font-weight:700;font-size:1.05rem}
+    .about-image img{width:100%;border-radius:var(--radius);box-shadow:var(--shadow-md)}
 
-    .about-image img{width:100%;border-radius:12px;box-shadow:0 12px 30px rgba(3,37,76,0.06)}
-
-    /* Courses */
-    .courses{padding-top:40px;padding-bottom:40px}
-    .course-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;max-width:1200px;margin:0 auto}
-    .course-card{
-      background:linear-gradient(180deg,#fff,#fcfeff);padding:18px;border-radius:14px;box-shadow:0 8px 24px rgba(7,40,89,0.06);text-align:center;
-      transition:transform .25s,box-shadow .25s;cursor:pointer;overflow:hidden;
+    /* Courses - Image Consistency FIX (PRESERVED) */
+    .course-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;max-width:1200px;margin:0 auto}
+    .course-card{background:linear-gradient(180deg,#fff,#fcfeff);padding:20px;border-radius:var(--radius);box-shadow:var(--shadow-sm);text-align:center;transition:transform .3s,box-shadow .3s;cursor:pointer;overflow:hidden;border:1px solid rgba(0,0,0,0.04);}
+    .course-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+    
+    .course-image-wrapper {
+        width: 100%;
+        height: 150px;
+        margin-bottom: 12px;
+        overflow: hidden;
+        border-radius: 12px;
     }
-    .course-card:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(7,40,89,0.09)}
-    .course-card img{width:100%;height:140px;object-fit:cover;border-radius:10px}
-    .course-card h3{color:var(--accent-1);margin:10px 0;font-size:1.05rem}
-
-    /* Gallery */
-    .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;max-width:1200px;margin:0 auto}
-    .gallery-grid img{width:100%;height:140px;object-fit:cover;border-radius:10px;transition:transform .3s}
-    .gallery-grid img:hover{transform:scale(1.05)}
-
-    /* Testimonials */
+    .course-image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+        border-radius: 12px;
+    }
+    .course-card:hover .course-image-wrapper img {
+        transform: scale(1.05);
+    }
+    /* END OF COURSE FIX */
+    
+    /* Gallery/Testimonials/Contact/Footer */
+    .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;max-width:1200px;margin:0 auto}
+    .gallery-grid img{width:100%;height:180px;object-fit:cover;border-radius:12px;transition:transform .3s,opacity .3s;box-shadow:var(--shadow-sm);cursor:pointer}
+    .gallery-grid img:hover{transform:scale(1.03);opacity:0.9}
     .testimonials{max-width:1100px;margin:0 auto}
-    .test-cards{display:flex;gap:14px;overflow:auto;padding-bottom:6px}
-    .test-card{min-width:260px;background:var(--card);padding:18px;border-radius:12px;box-shadow:0 8px 18px rgba(7,40,89,0.06)}
-    .test-card p{color:var(--muted);margin-bottom:12px}
-    .test-card .who{font-weight:700;color:#042047;font-size:0.95rem}
+    .test-cards{display:flex;gap:18px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x mandatory;}
+    .test-card{min-width:300px;max-width:300px;scroll-snap-align:start;background:var(--card);padding:24px;border-radius:var(--radius);box-shadow:var(--shadow-sm);border:1px solid rgba(0,0,0,0.04);}
 
     /* Contact */
-    .contact-container{display:grid;grid-template-columns:360px 1fr;gap:28px;max-width:1100px;margin:0 auto}
-    form{display:flex;flex-direction:column;gap:12px;background:var(--card);padding:18px;border-radius:12px;box-shadow:0 8px 24px rgba(7,40,89,0.06)}
-    input,textarea{padding:12px;border-radius:8px;border:1px solid #e6eef9;font-family:inherit}
-    textarea{min-height:120px;resize:vertical}
-    .contact-info{padding:18px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfeff);box-shadow:0 8px 24px rgba(7,40,89,0.04)}
+    .contact-container{display:grid;grid-template-columns:1fr 400px;gap:36px;max-width:1100px;margin:0 auto}
+    form{display:flex;flex-direction:column;gap:15px;background:var(--card);padding:25px;border-radius:var(--radius);box-shadow:var(--shadow-md)}
+    input,textarea{padding:14px;border-radius:10px;border:1px solid #e6eef9;font-family:inherit;font-size:1rem;transition:border-color .3s}
 
-    /* Footer */
-    footer{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:white;padding:34px 6%}
-    .footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
-    .map-embed{width:100%;height:200px;border-radius:10px;border:0;box-shadow:0 8px 30px rgba(0,0,0,0.12)}
-    .socials{display:flex;gap:10px;margin-top:12px}
-    .socials a{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:8px;background:rgba(255,255,255,0.12);color:white}
+    /* Footer - 3-COLUMN LAYOUT */
+    footer{background:var(--heading);color:white;padding:50px 6%;font-size:0.95rem}
+    .footer-inner{
+      max-width:1200px;margin:0 auto;display:grid;
+      grid-template-columns: 1.5fr 1fr 1.5fr;
+      gap: 30px;
+      align-items:start
+    }
+    .footer-column h4{font-size:1.1rem;margin-bottom:15px;font-weight:700;color:var(--accent-2)}
+    .footer-links{list-style:none;padding:0;display:flex;flex-direction:column;gap:10px}
+    .footer-links a{transition:color .3s}
+    .footer-links a:hover{color:var(--accent-2)}
+    .map-embed{width:100%;height:180px;border-radius:12px;border:0;box-shadow:0 8px 30px rgba(0,0,0,0.12)}
+    .socials{display:flex;gap:12px;margin-top:15px}
+    .socials a{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.15);color:white;transition:background .3s}
+    .socials a:hover{background:var(--accent-2)}
+    .copyright{grid-column:1/-1;text-align:center;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1);margin-top:20px;font-size:0.85rem}
 
-    /* Modal */
-    .modal{display:none;position:fixed;inset:0;background:rgba(2,6,23,0.6);z-index:2000;align-items:center;justify-content:center;padding:18px}
+    /* Modal FIX: Full viewport overlay (PRESERVED) */
+    .modal{
+      display:none;
+      position:fixed;
+      top:0;
+      left:0;
+      width:100vw; 
+      height:100vh; 
+      background:rgba(2,6,23,0.7);
+      z-index:2000;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+    }
     .modal.show{display:flex}
-    .modal-content{background:white;border-radius:12px;padding:18px;width:100%;max-width:520px;position:relative}
-    .modal-content h3{color:var(--accent-1);margin-bottom:6px}
-    .modal .close{position:absolute;right:12px;top:8px;font-size:20px;cursor:pointer;color:#445}
+    .modal-content{background:white;border-radius:var(--radius);padding:30px;width:100%;max-width:450px;position:relative;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow-md)}
+    .modal-content h2{color:var(--accent-1);margin-bottom:5px;font-size:1.6rem}
+    .modal .close{position:absolute;right:15px;top:10px;font-size:28px;cursor:pointer;color:#445;transition:color .2s}
+
 
     /* responsive */
     @media (max-width:1000px){
-      .hero-inner{grid-template-columns:1fr}
-      .about-inner{grid-template-columns:1fr}
+      .hero-inner{grid-template-columns:1fr;gap:30px}
+      .about-inner{grid-template-columns:1fr;gap:30px}
+      .about-inner .about-image{order:-1;}
       .contact-container{grid-template-columns:1fr}
+      .footer-inner{grid-template-columns:1fr 1fr;gap:30px}
+      .footer-inner .map-column{grid-column:1/-1;}
+      section{padding:70px 5%}
     }
     @media (max-width:760px){
-      .nav-links{display:none;position:absolute;right:0;top:70px;background:linear-gradient(90deg, rgba(0,123,255,0.08), rgba(0,198,255,0.03));width:100%;padding:16px;border-top-left-radius:12px;border-top-right-radius:12px}
-      .nav-links.show{display:flex;flex-direction:column;gap:8px}
-      .menu-toggle{display:block}
-      .hero h1{font-size:1.4rem}
-      .hero .hero-inner{padding:18px}
-      .hero-card{padding:18px}
-      .gallery-grid img{height:120px}
-      .test-cards{gap:10px}
-      .stat-grid{flex-direction:column;gap:8px}
-      .footer-inner{grid-template-columns:1fr}
+      .hero h1{font-size:2rem}
+      .features{grid-template-columns:1fr}
+      .footer-inner{grid-template-columns:1fr;gap:40px}
+      .logo div{display:none}
     }
-
     /* tiny helpers */
     .muted{color:var(--muted)}
     .center{text-align:center}
+    h2{font-weight:800;color:var(--heading)}
   </style>
 </head>
 <body>
-
-  <!-- HEADER -->
   <header>
     <nav class="navbar" role="navigation" aria-label="Main Navigation">
-      <div class="logo">
+      <div class="logo" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
         <img src="images/logo.jpg" alt="SR Logo" />
         <div>
           <h2>SR Computer Academy</h2>
-          <div style="font-size:12px;color:#0b2546;margin-top:2px">SR Study Library — Reotipur, Ghazipur</div>
+          <div>SR Study Library, Reotipur</div>
         </div>
       </div>
 
@@ -210,18 +266,17 @@
       </ul>
 
       <div class="login-row">
-        <button id="adminLoginBtn" class="small-btn ghost">Admin Login</button>
-        <button id="studentLoginBtn" class="small-btn">Student Login</button>
+        <button id="adminLoginBtn" class="small-btn ghost">Admin</button>
+        <button id="studentLoginBtn" class="small-btn">Student</button>
         <div class="menu-toggle" id="menuToggle">☰</div>
       </div>
     </nav>
   </header>
 
-  <!-- HERO -->
   <section id="home" class="hero">
     <div class="hero-inner">
       <div class="hero-card" data-aos="fade-right">
-        <span class="eyebrow">Trusted • Practical • Certificate</span>
+        <span class="eyebrow">Trusted • Practical • Certified</span>
         <h1 id="heroTitle">Upgrade your computer skills — get real projects & certificates.</h1>
         <p class="lead">Small batches, hands-on practical training and a quiet study library for focused learning. Join short-term courses like DCA, ADCA, CCC and specialized classes in Web & Data.</p>
 
@@ -230,28 +285,28 @@
           <button class="cta ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact Us</button>
         </div>
 
-        <div style="margin-top:18px" class="muted">
+        <div style="margin-top:20px" class="muted">
           <strong>Location:</strong> SR Study Library, Near Petrol Pump, Reotipur, Ghazipur
         </div>
       </div>
 
       <aside class="info-card" data-aos="fade-left">
-        <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px">
-          <img src="images/about.png" alt="about" style="width:86px;height:86px;border-radius:12px;object-fit:cover">
+        <div style="display:flex;gap:12px;align-items:center;margin-bottom:15px">
+          <img src="images/about.png" alt="about" style="width:80px;height:80px;border-radius:10px;object-fit:cover">
           <div>
-            <div style="font-weight:700;color:#062241">Start Today</div>
-            <div class="muted" style="font-size:0.95rem">Enroll in short courses with certificate & practical assignments.</div>
+            <div style="font-weight:700;color:var(--heading);font-size:1.1rem;">Start Your Journey</div>
+            <div class="muted" style="font-size:0.9rem">Enroll in short courses with certificate & practical assignments.</div>
           </div>
         </div>
 
-        <div class="stat-grid" style="margin-top:16px">
+        <div class="stat-grid" style="margin-top:20px">
           <div class="stat">
             <h3 id="countStudents">0</h3>
             <p>Students Trained</p>
           </div>
           <div class="stat">
             <h3 id="countCourses">0</h3>
-            <p>Courses Offered</p>
+            <p>Courses</p>
           </div>
           <div class="stat">
             <h3 id="countBatches">0</h3>
@@ -259,90 +314,106 @@
           </div>
         </div>
 
-        <div style="margin-top:16px;display:flex;gap:8px">
+        <div style="margin-top:25px;display:flex;gap:10px;justify-content:space-between">
           <button class="small-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Book a Visit</button>
-          <a href="tel:+918808616262" class="small-btn ghost" style="display:inline-flex;align-items:center;gap:8px">Call: +91 8808616262</a>
+          <a href="tel:+918808616262" class="small-btn ghost" style="display:inline-flex;align-items:center;gap:8px">Call Now</a>
         </div>
       </aside>
     </div>
   </section>
 
-  <!-- ABOUT -->
   <section id="about" class="about">
     <div class="about-inner">
+      <div class="about-image" data-aos="zoom-in">
+        <img src="images/library.jpg" alt="Library & training" />
+      </div>
       <div class="about-text" data-aos="fade-up">
-        <h2>About SR Computer Academy & Study Library</h2>
+        <h2 style="font-size:1.8rem;">About SR Computer Academy & Study Library</h2>
         <p>We combine practical computer training with a calm library environment so learners can practice and revise. Our trainers focus on project-based learning and placement-ready skills.</p>
 
         <div class="features">
           <div class="feature">
-            <!-- SVG laptop -->
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="5" width="20" height="12" rx="1.5" stroke="#007bff" stroke-width="1.6"/><path d="M2 19h20" stroke="#007bff" stroke-width="1.6" stroke-linecap="round"/></svg>
-            <div><strong>Hands-on courses</strong><span class="muted">Beginner to advanced practical classes.</span></div>
+            <div class="feature-icon-container" style="background:rgba(0,179,230,0.15);">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="5" width="20" height="12" rx="1.5" stroke="#00b3e6" stroke-width="1.8"/><path d="M2 19h20" stroke="#00b3e6" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </div>
+            <div><strong>Hands-on Courses</strong><span class="muted">Beginner to advanced practical classes.</span></div>
           </div>
 
           <div class="feature">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18v14H3z" stroke="#00c6ff" stroke-width="1.6"/><path d="M7 9h10" stroke="#00c6ff" stroke-width="1.6"/></svg>
-            <div><strong>Fully-equipped library</strong><span class="muted">Quiet spaces & study resources.</span></div>
+            <div class="feature-icon-container">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h18v14H3z" stroke="#0077ff" stroke-width="1.8"/><path d="M7 9h10" stroke="#0077ff" stroke-width="1.8"/></svg>
+            </div>
+            <div><strong>Fully-Equipped Library</strong><span class="muted">Quiet spaces & study resources.</span></div>
           </div>
 
           <div class="feature">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="3" stroke="#007bff" stroke-width="1.6"/><path d="M5 20c1-5 6-7 7-7s6 2 7 7" stroke="#007bff" stroke-width="1.6"/></svg>
-            <div><strong>Experienced instructors</strong><span class="muted">Real-world experience and mentoring.</span></div>
+            <div class="feature-icon-container" style="background:rgba(255,100,50,0.15);">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="3" stroke="#ff6432" stroke-width="1.8"/><path d="M5 20c1-5 6-7 7-7s6 2 7 7" stroke="#ff6432" stroke-width="1.8"/></svg>
+            </div>
+            <div><strong>Experienced Instructors</strong><span class="muted">Real-world experience and mentoring.</span></div>
           </div>
 
           <div class="feature">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2v6" stroke="#00c6ff" stroke-width="1.6"/><path d="M5 11h14" stroke="#00c6ff" stroke-width="1.6"/><path d="M7 20h10" stroke="#00c6ff" stroke-width="1.6"/></svg>
-            <div><strong>Certificates</strong><span class="muted">Get recognized on completion.</span></div>
+            <div class="feature-icon-container" style="background:rgba(46,204,113,0.15);">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2v6" stroke="#2ecc71" stroke-width="1.8"/><path d="M5 11h14" stroke="#2ecc71" stroke-width="1.8"/><path d="M7 20h10" stroke="#2ecc71" stroke-width="1.8"/></svg>
+            </div>
+            <div><strong>Certified Courses</strong><span class="muted">Get recognized certificate on completion.</span></div>
           </div>
         </div>
 
-      </div>
-
-      <div class="about-image" data-aos="zoom-in">
-        <img src="images/library.jpg" alt="Library & training" />
       </div>
     </div>
   </section>
 
-  <!-- COURSES -->
   <section id="courses" class="courses">
     <div style="max-width:1200px;margin:0 auto">
-      <h2 style="text-align:center;color:#062241;margin-bottom:18px" data-aos="fade-up">Our Courses</h2>
+      <h2 style="text-align:center;color:var(--heading);margin-bottom:40px" data-aos="fade-up">Explore Our Popular Courses</h2>
       <div class="course-list" data-aos="fade-up" id="courseList">
 
         <div class="course-card" data-course="dca">
-          <img src="images/course-dca.png" alt="DCA" />
-          <h3>DCA</h3>
+          <div class="course-image-wrapper">
+            <img src="images/course-dca.png" alt="DCA" />
+          </div>
+          <h3>DCA (Diploma in Computer Applications)</h3>
           <button class="small-btn" onclick="openCourse('dca')">View Details</button>
         </div>
 
         <div class="course-card" data-course="adca">
-          <img src="images/course-adca.jpeg" alt="ADCA" />
-          <h3>ADCA</h3>
+          <div class="course-image-wrapper">
+            <img src="images/course-adca.jpeg" alt="ADCA" />
+          </div>
+          <h3>ADCA (Advanced Diploma)</h3>
           <button class="small-btn" onclick="openCourse('adca')">View Details</button>
         </div>
 
         <div class="course-card" data-course="dfa">
-          <img src="images/course-dfa.jpeg" alt="DFA" />
-          <h3>DFA</h3>
+          <div class="course-image-wrapper">
+            <img src="images/course-dfa.jpeg" alt="DFA" />
+          </div>
+          <h3>DFA (Financial Accounting)</h3>
           <button class="small-btn" onclick="openCourse('dfa')">View Details</button>
         </div>
 
         <div class="course-card" data-course="ccc">
-          <img src="images/course-ccc.jpg" alt="CCC" />
-          <h3>CCC</h3>
+          <div class="course-image-wrapper">
+            <img src="images/course-ccc.jpg" alt="CCC" />
+          </div>
+          <h3>CCC (Computer Concepts)</h3>
           <button class="small-btn" onclick="openCourse('ccc')">View Details</button>
         </div>
 
         <div class="course-card" data-course="web">
-          <img src="images/course-web.png" alt="Web Design" />
+          <div class="course-image-wrapper">
+            <img src="images/course-web.png" alt="Web Design" />
+          </div>
           <h3>Web Design & Development</h3>
           <button class="small-btn" onclick="openCourse('web')">View Details</button>
         </div>
 
         <div class="course-card" data-course="data">
-          <img src="images/course-data.png" alt="Data Analytics" />
+          <div class="course-image-wrapper">
+            <img src="images/course-data.png" alt="Data Analytics" />
+          </div>
           <h3>Data Analytics</h3>
           <button class="small-btn" onclick="openCourse('data')">View Details</button>
         </div>
@@ -351,9 +422,8 @@
     </div>
   </section>
 
-  <!-- GALLERY -->
-  <section id="gallery" class="gallery">
-    <h2 class="center" data-aos="fade-up">Our Gallery</h2>
+  <section id="gallery" class="gallery" style="background:var(--card); border-top:1px solid #eee;">
+    <h2 class="center" style="margin-bottom:30px" data-aos="fade-up">Our Academy Snapshots</h2>
     <div class="gallery-grid" data-aos="fade-up">
       <img src="images/gallery1.jpg" alt="Gallery 1" />
       <img src="images/gallery2.jpg" alt="Gallery 2" />
@@ -364,120 +434,151 @@
     </div>
   </section>
 
-  <!-- TESTIMONIALS -->
   <section id="testimonials" class="testimonials">
-    <h2 class="center" data-aos="fade-up">What students say</h2>
+    <h2 class="center" style="margin-bottom:30px" data-aos="fade-up">What Our Students Say</h2>
     <div class="testimonials" data-aos="fade-up">
       <div class="test-cards" id="testCards">
         <div class="test-card">
-          <p>"Great practical classes — learned a lot and built a portfolio project."</p>
+          <p>"Great practical classes — learned a lot and built a portfolio project. The trainers are excellent!"</p>
           <div class="who">— Anjali (DCA)</div>
         </div>
         <div class="test-card">
-          <p>"Library is calm and very helpful. Trainers are patient and explain well."</p>
+          <p>"Library is calm and very helpful. Trainers are patient and explain well. Best place for focused study."</p>
           <div class="who">— Rohit (ADCA)</div>
         </div>
         <div class="test-card">
-          <p>"Managed to get a job interview after completing the course. Recommended!"</p>
+          <p>"Managed to get a job interview after completing the course. Highly recommended for career-focused training!"</p>
           <div class="who">— Pooja (Web Dev)</div>
         </div>
         <div class="test-card">
-          <p>"Affordable fees and practical assignments helped me a lot."</p>
+          <p>"Affordable fees and practical assignments helped me a lot. The learning environment is very supportive."</p>
           <div class="who">— Amit (CCC)</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section id="contact" class="contact">
-    <h2 class="center" data-aos="fade-up">Contact Us</h2>
+  <section id="contact" class="contact" style="background:linear-gradient(120deg,#f6faff,#f1fbff);">
+    <h2 class="center" style="margin-bottom:30px" data-aos="fade-up">Get in Touch with SR</h2>
     <div class="contact-container" data-aos="fade-up">
-      <form id="contactForm">
-        <input type="text" name="name" placeholder="Your Name" required />
-        <input type="email" name="email" placeholder="Your Email" required />
-        <input type="text" name="phone" placeholder="Phone Number" required />
-        <textarea name="message" placeholder="Your Message" required></textarea>
-        <button type="submit" class="small-btn" id="submitBtn">
-          <span class="btn-text">Send Message</span>
-          <span class="spinner" style="display:none"></span>
-        </button>
-      </form>
-
       <div class="contact-info">
-        <h3>Get in Touch</h3>
-        <p><strong>Address:</strong> SR Study Library, Near Petrol Pump, Reotipur, Ghazipur</p>
-        <p><strong>Phone:</strong> <a href="tel:+918808616262">+91 8808616262</a></p>
-        <p><strong>Email:</strong> <a href="mailto:srcomputeracademyrtp@gmail.com">srcomputeracademyrtp@gmail.com</a></p>
-        <div style="margin-top:10px">
+        <h3>Our Contact Details</h3>
+        <p style="margin-bottom:10px"><strong>Address:</strong> SR Study Library, Near Petrol Pump, Reotipur, Ghazipur</p>
+        <p style="margin-bottom:10px"><strong>Phone:</strong> <a href="tel:+918808616262" style="color:var(--accent-1); font-weight:600;">+91 8808616262</a></p>
+        <p style="margin-bottom:10px"><strong>Email:</strong> <a href="mailto:srcomputeracademyrtp@gmail.com" style="color:var(--accent-1); font-weight:600;">srcomputeracademyrtp@gmail.com</a></p>
+        <div style="margin-top:15px">
           <strong>Opening Hours</strong>
           <p class="muted">Mon–Sat: 9:00 AM — 7:00 PM</p>
         </div>
-        <div style="margin-top:12px">
+        <div style="margin-top:15px">
           <strong>Follow us</strong>
-          <div class="socials">
-            <a href="#" title="Facebook" aria-label="Facebook">
-              <!-- FB svg -->
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 2h-3a4 4 0 0 0-4 4v3H8v4h3v8h4v-8h3l1-4h-4V6a1 1 0 0 1 1-1h3V2z" fill="white"/></svg>
+          <div class="socials" style="margin-top:10px;">
+            <a href="https://www.facebook.com/shubham.rai.52090" title="Facebook" aria-label="Facebook" style="background:var(--accent-1)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 2h-3a4 4 0 0 0-4 4v3H8v4h3v8h4v-8h3l1-4h-4V6a1 1 0 0 1 1-1h3V2z" fill="white"/></svg>
             </a>
-            <a href="#" title="WhatsApp" aria-label="WhatsApp">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 11.5A9.5 9.5 0 1 0 3.6 18.6L3 21l2.6-.6A9.5 9.5 0 0 0 21 11.5zM12 6.2a1 1 0 0 1 1 1v.1a1 1 0 0 1-.3.7l-.4.3a1 1 0 0 0-.3.6c0 .3.2.6.4.8l.5.4a3.6 3.6 0 0 0 1.2.6c.6.2 1.1.2 1.5.1.3-.1.5-.2.7-.3l.4-.2a1 1 0 0 1 .8.1 5 5 0 0 1 .9.8c.2.2.3.4.3.6 0 .2-.1.5-.4.9-.3.4-.9 1-1.8 1.5-1.3.7-2.2.9-3.2.7a9 9 0 0 1-1.9-.6 11 11 0 0 1-2.2-1.2c-1-.7-1.6-1.7-2-2.8-.4-1.1-.4-2.3.2-3.5.7-1.4 2-2.5 4-3.3.8-.3 1.5-.5 2.1-.5z" fill="white"/></svg>
+            <a href="https://wa.me/918808616262" title="WhatsApp" aria-label="WhatsApp" style="background:#25D366">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 11.5A9.5 9.5 0 1 0 3.6 18.6L3 21l2.6-.6A9.5 9.5 0 0 0 21 11.5zM12 6.2a1 1 0 0 1 1 1v.1a1 1 0 0 1-.3.7l-.4.3a1 1 0 0 0-.3.6c0 .3.2.6.4.8l.5.4a3.6 3.6 0 0 0 1.2.6c.6.2 1.1.2 1.5.1.3-.1.5-.2.7-.3l.4-.2a1 1 0 0 1 .8.1 5 5 0 0 1 .9.8c.2.2.3.4.3.6 0 .2-.1.5-.4.9-.3.4-.9 1-1.8 1.5-1.3.7-2.2.9-3.2.7a9 9 0 0 1-1.9-.6 11 11 0 0 1-2.2-1.2c-1-.7-1.6-1.7-2-2.8-.4-1.1-.4-2.3.2-3.5.7-1.4 2-2.5 4-3.3.8-.3 1.5-.5 2.1-.5z" fill="white"/></svg>
             </a>
           </div>
         </div>
       </div>
+      <form id="contactForm">
+        <h3 style="color:var(--heading); font-size:1.4rem; margin-bottom:5px;">Send Us a Message</h3>
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="email" placeholder="Your Email" required />
+        <input type="text" name="phone" placeholder="Phone Number" required />
+        <textarea name="message" placeholder="Your Message" required></textarea>
+        <button type="submit" class="small-btn" id="submitBtn" style="width:100%">
+          <span class="btn-text">Send Message</span>
+          <span class="spinner" style="display:none"></span>
+        </button>
+      </form>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
-      <div>
-        <h3 style="margin-bottom:8px">SR Computer Academy & Study Library</h3>
-        <p style="margin-bottom:10px" class="muted">Near Petrol Pump, Reotipur, Ghazipur — Practical IT training & calm study space.</p>
-        <p style="font-size:13px">© 2025 SR Computer Academy & SR Study Library. All Rights Reserved. Designed by <a href="http://shubhamraivns.vercel.app" style="color:rgba(255,255,255,0.95);font-weight:700">@Shubham Rai</a></p>
+      <div class="footer-column">
+        <div class="logo" style="color:white; margin-bottom:10px;">
+            <img src="images/logo.jpg" alt="SR Logo" />
+            <div>
+              <h2 style="color:white;">SR Computer Academy</h2>
+              <div style="color:rgba(255,255,255,0.8);">Practical IT Training & Study Library</div>
+            </div>
+        </div>
+        <p style="margin-bottom:15px; font-size:0.95rem">We are committed to providing hands-on, quality computer education and a focused learning environment in Reotipur.</p>
+        <div style="margin-top:10px;">
+            <h4 style="font-size:1rem; color:white; margin-bottom:5px;">Connect with us</h4>
+            <div class="socials" style="margin-top:0;">
+                <a href="https://www.facebook.com/shubham.rai.52090" title="Facebook" aria-label="Facebook">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 2h-3a4 4 0 0 0-4 4v3H8v4h3v8h4v-8h3l1-4h-4V6a1 1 0 0 1 1-1h3V2z" fill="white"/></svg>
+                </a>
+                <a href="https://wa.me/918808616262" title="WhatsApp" aria-label="WhatsApp">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 11.5A9.5 9.5 0 1 0 3.6 18.6L3 21l2.6-.6A9.5 9.5 0 0 0 21 11.5zM12 6.2a1 1 0 0 1 1 1v.1a1 1 0 0 1-.3.7l-.4.3a1 1 0 0 0-.3.6c0 .3.2.6.4.8l.5.4a3.6 3.6 0 0 0 1.2.6c.6.2 1.1.2 1.5.1.3-.1.5-.2.7-.3l.4-.2a1 1 0 0 1 .8.1 5 5 0 0 1 .9.8c.2.2.3.4.3.6 0 .2-.1.5-.4.9-.3.4-.9 1-1.8 1.5-1.3.7-2.2.9-3.2.7a9 9 0 0 1-1.9-.6 11 11 0 0 1-2.2-1.2c-1-.7-1.6-1.7-2-2.8-.4-1.1-.4-2.3.2-3.5.7-1.4 2-2.5 4-3.3.8-.3 1.5-.5 2.1-.5z" fill="white"/></svg>
+                </a>
+            </div>
+        </div>
       </div>
 
-      <div>
-        <!-- Google Maps Embed (address used: SR Study Library Near Petrol Pump Reotipur Ghazipur) -->
-        <iframe class="map-embed" src="https://www.google.com/maps?q=SR%20Study%20Library%20Near%20Petrol%20Pump%20Reotipur%20Ghazipur&output=embed"></iframe>
+      <div class="footer-column">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#courses">Our Courses</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column map-column">
+        <h4>Find Our Location</h4>
+        <p style="margin-bottom:12px">SR Study Library, Near Petrol Pump, Reotipur, Ghazipur, UP 233223</p>
+        <iframe class="map-embed" src="https://www.google.com/maps?q=SR%20Study%20Library%20Near%20Petrol%20Pump%20Reotipur%20Ghazipur&output=embed" aria-label="Google Maps Location"></iframe>
+      </div>
+      
+      <div class="copyright">
+        © 2025 SR Computer Academy & SR Study Library. All Rights Reserved. Designed with <span style="color:red;">♥</span> by <a href="http://shubhamraivns.vercel.app" style="color:var(--accent-2);font-weight:700">Shubham Rai</a>
       </div>
     </div>
   </footer>
 
-  <!-- COURSE DETAILS MODAL (keeps original single modal behavior) -->
   <div id="courseModal" class="modal" aria-hidden="true">
     <div class="modal-content">
-      <span class="close" id="modalClose">&times;</span>
+      <span class="close" id="modalClose">×</span>
       <h3 id="modalCourseTitle">Course Title</h3>
       <p id="modalCourseDesc">Course Description</p>
     </div>
   </div>
 
-  <!-- ADMIN MODAL -->
   <div id="adminModal" class="modal" aria-hidden="true">
     <div class="modal-content">
-      <span class="close" id="closeAdmin">&times;</span>
+      <span class="close" id="closeAdmin">×</span>
       <h2>Admin Login</h2>
       <input type="text" id="adminUser" placeholder="Username" required>
       <input type="password" id="adminPass" placeholder="Password" required>
-      <button id="adminSubmit" class="small-btn">Login</button>
+      <button id="adminSubmit" class="small-btn" style="width:100%;">
+        <span class="btn-text">Login</span>
+        <span class="spinner" style="display:none"></span>
+      </button>
+      <p id="adminFeedback" style="color:var(--accent-1); margin-top:0px; text-align:center; font-size:0.9rem; font-weight:600;"></p>
     </div>
   </div>
 
-  <!-- STUDENT MODAL -->
   <div id="studentModal" class="modal" aria-hidden="true">
     <div class="modal-content">
-      <span class="close" id="closeStudent">&times;</span>
+      <span class="close" id="closeStudent">×</span>
       <h2>Student Login</h2>
-      <div id="spinner" style="display:none;margin:10px auto 8px"></div>
       <input type="text" id="studentUser" placeholder="Username" required>
       <input type="password" id="studentPass" placeholder="Password" required>
-      <button id="studentSubmit" class="small-btn">Login</button>
+      <button id="studentSubmit" class="small-btn" style="width:100%;">
+        <span class="btn-text">Login</span>
+        <span class="spinner" style="display:none"></span>
+      </button>
+      <p id="studentFeedback" style="color:var(--accent-1); margin-top:0px; text-align:center; font-size:0.9rem; font-weight:600;"></p>
     </div>
   </div>
-
-  <!-- AOS -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
   <script>
@@ -491,75 +592,57 @@
     const adminFixedPass = "adminsrca";
 
     /***************
-     * AOS init
+     * AOS init & UI Setup
      ***************/
     AOS.init({ duration:800, offset:120, once:true });
 
-    /***************
-     * Mobile menu toggle
-     ***************/
+    // Mobile menu toggle
     const menuToggle = document.getElementById('menuToggle');
     const navLinks = document.getElementById('navLinks');
     menuToggle.addEventListener('click', () => navLinks.classList.toggle('show'));
 
-    // Smooth scroll for nav links
-    document.querySelectorAll('.nav-links a').forEach(link => {
+    // Smooth scroll for nav links & close menu
+    document.querySelectorAll('.nav-links a, .footer-links a').forEach(link => {
       link.addEventListener('click', function(e){
-        e.preventDefault();
-        const targetId = this.getAttribute('href').substring(1);
-        const target = document.getElementById(targetId);
-        if (target) {
-          window.scrollTo({ top: target.offsetTop - 70, behavior: 'smooth' });
+        if (this.getAttribute('href').startsWith('#')) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href').substring(1);
+          const target = document.getElementById(targetId);
+          if (target) {
+            window.scrollTo({ top: target.offsetTop - 70, behavior: 'smooth' });
+          }
+          navLinks.classList.remove('show');
         }
-        navLinks.classList.remove('show');
       });
     });
 
     /***************
-     * Hero rotating lines (keeps your copy but nicer)
+     * Hero rotating lines (enhanced)
      ***************/
     const heroTexts = [
-      "Empowering You Through Digital Skills.",
-      "Master Computer Skills Easily.",
-      "Upgrade Your Skills. Secure Your Future.",
-      "From Basics to Brilliance in Computing.",
-      "Join SR Computer Academy Today!"
+      "Upgrade your computer skills — get real projects & certificates.",
+      "Master essential IT skills with hands-on practice.",
+      "Your journey to digital literacy starts here.",
+      "Get career-ready training for a better future.",
+      "Small batches, big results. Join SR Computer Academy!"
     ];
     let heroIndex = 0;
     const heroTitle = document.getElementById('heroTitle');
     setInterval(() => {
       heroIndex = (heroIndex + 1) % heroTexts.length;
       heroTitle.textContent = heroTexts[heroIndex];
-    }, 4200);
+    }, 4500);
 
     /***************
-     * Course data (preserved content)
+     * Course Modal logic
      ***************/
     const courseData = {
-      dca: {
-        title: "DCA (Diploma in Computer Applications)",
-        desc: "Learn computer fundamentals, MS Office, internet, and basics of programming. Ideal for beginners to get hands-on computer skills."
-      },
-      adca: {
-        title: "ADCA (Advanced Diploma in Computer Applications)",
-        desc: "Advanced computer concepts, programming languages, database management, and practical applications for career growth."
-      },
-      dfa: {
-        title: "DFA (Diploma in Financial Accounting)",
-        desc: "Comprehensive accounting, Tally ERP, and financial management skills for students and professionals."
-      },
-      ccc: {
-        title: "CCC (Course on Computer Concepts)",
-        desc: "Basic digital literacy course covering MS Office, internet browsing, email, and essential computer knowledge."
-      },
-      web: {
-        title: "Web Design & Development",
-        desc: "Learn HTML, CSS, JavaScript, and modern frameworks to build responsive and interactive websites."
-      },
-      data: {
-        title: "Data Analytics",
-        desc: "Analyze data using Excel, Python, and visualization tools. Learn insights generation for business and research."
-      }
+      dca: { title: "DCA (Diploma in Computer Applications)", desc: "Learn computer fundamentals, MS Office (Word, Excel, PowerPoint), internet usage, and basics of programming. Ideal for beginners to get hands-on computer skills." },
+      adca: { title: "ADCA (Advanced Diploma in Computer Applications)", desc: "Advanced computer concepts, detailed MS Office (Advanced Excel), programming languages (e.g., C/C++ basics), database management, and project work for comprehensive career growth." },
+      dfa: { title: "DFA (Diploma in Financial Accounting)", desc: "Comprehensive accounting principles, Tally ERP software mastery, GST compliance, and financial management skills for students and professionals targeting accounting roles." },
+      ccc: { title: "CCC (Course on Computer Concepts)", desc: "Basic digital literacy course covering MS Office, internet browsing, email, digital financial services, and essential computer knowledge, certified by NIELIT." },
+      web: { title: "Web Design & Development", desc: "Learn foundational web technologies: HTML, CSS, JavaScript, and modern frameworks/tools (like Bootstrap or React basics) to build responsive, interactive websites and portfolio projects." },
+      data: { title: "Data Analytics", desc: "Introduction to data analysis using advanced Excel, basic SQL, Python for data manipulation, and visualization tools (like Power BI or Tableau) to derive insights from data." }
     };
 
     function openCourse(key){
@@ -573,18 +656,26 @@
       }
     }
 
-    // close course modal
-    document.getElementById('modalClose').addEventListener('click', () => {
-      document.getElementById('courseModal').classList.remove('show');
-    });
+    // close modals
+    document.getElementById('modalClose').addEventListener('click', () => { document.getElementById('courseModal').classList.remove('show'); });
+    document.getElementById('closeAdmin').onclick = () => document.getElementById('adminModal').classList.remove('show');
+    document.getElementById('closeStudent').onclick = () => document.getElementById('studentModal').classList.remove('show');
+
+    // Close on outside click / ESC
     window.addEventListener('click', (e) => {
       if (e.target.classList && e.target.classList.contains('modal')) {
         e.target.classList.remove('show');
       }
     });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal.show').forEach(m => m.classList.remove('show'));
+      }
+    });
+
 
     /***************
-     * Contact Form (preserved logic) - uses contactScriptURL
+     * Contact Form (ENHANCED with loading state)
      ***************/
     document.getElementById("contactForm").addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -593,14 +684,12 @@
       const btnText = submitBtn.querySelector(".btn-text");
       const spinner = submitBtn.querySelector(".spinner");
 
-      // prepare form data
       const formData = new FormData(form);
       const formObject = Object.fromEntries(formData.entries());
 
-      // show spinner
+      // Show spinner
       btnText.textContent = "Sending...";
       spinner.style.display = "inline-block";
-      submitBtn.classList.add("sending");
       submitBtn.disabled = true;
 
       try {
@@ -612,111 +701,143 @@
 
         await response.text();
 
-        btnText.textContent = "✅ Message Sent!";
+        btnText.textContent = "✅ Sent!";
         spinner.style.display = "none";
-        submitBtn.style.background = "#2ecc71";
+        submitBtn.style.background = "#2ecc71"; // Success color
 
         setTimeout(() => {
           form.reset();
           submitBtn.disabled = false;
           btnText.textContent = "Send Message";
           submitBtn.style.background = "";
-          submitBtn.classList.remove("sending");
-        }, 2300);
+        }, 2500);
       } catch (error) {
         console.error("Error!", error.message);
         btnText.textContent = "❌ Error!";
         spinner.style.display = "none";
-        submitBtn.style.background = "#e74c3c";
+        submitBtn.style.background = "#e74c3c"; // Error color
 
         setTimeout(() => {
           submitBtn.disabled = false;
           btnText.textContent = "Send Message";
           submitBtn.style.background = "";
-          submitBtn.classList.remove("sending");
-        }, 2300);
+        }, 2500);
       }
     });
 
     /***************
-     * Login modals and logic (ADMIN & STUDENT) - preserved credentials & URLs
+     * Login Modals & Logic (ADMIN & STUDENT) - ENHANCED with loading state
      ***************/
-    const adminModal = document.getElementById("adminModal");
-    const studentModal = document.getElementById("studentModal");
+    document.getElementById("adminLoginBtn").onclick = () => document.getElementById("adminModal").classList.add("show");
+    document.getElementById("studentLoginBtn").onclick = () => document.getElementById("studentModal").classList.add("show");
 
-    document.getElementById("adminLoginBtn").onclick = () => adminModal.classList.add("show");
-    document.getElementById("studentLoginBtn").onclick = () => studentModal.classList.add("show");
-
-    document.getElementById("closeAdmin").onclick = () => adminModal.classList.remove("show");
-    document.getElementById("closeStudent").onclick = () => studentModal.classList.remove("show");
-
-    // Admin login - preserved validation
+    // Admin login - ENHANCED with loading state
     document.getElementById("adminSubmit").onclick = () => {
-      const user = document.getElementById("adminUser").value.trim();
-      const pass = document.getElementById("adminPass").value.trim();
-      if (user === adminFixedUser && pass === adminFixedPass) {
-        window.location.href = "admin-dashboard.html";
-      } else {
-        alert("Invalid admin credentials.");
-      }
-    };
+        const user = document.getElementById("adminUser").value.trim();
+        const pass = document.getElementById("adminPass").value.trim();
+        const submitBtn = document.getElementById("adminSubmit");
+        const btnText = submitBtn.querySelector(".btn-text");
+        const spinner = submitBtn.querySelector(".spinner");
+        const feedback = document.getElementById("adminFeedback");
 
-    // Student login - preserved sheet URL & behavior
-    document.getElementById("studentSubmit").onclick = async () => {
-      const username = document.getElementById("studentUser").value.trim();
-      const password = document.getElementById("studentPass").value.trim();
-
-      if (!username || !password) {
-        alert("Please enter both username and password.");
-        return;
-      }
-
-      document.getElementById("studentSubmit").disabled = true;
-      document.getElementById("spinner").style.display = "inline-block";
-
-      try {
-        const response = await fetch(`${studentSheetUrl}?user=${encodeURIComponent(username)}&pass=${encodeURIComponent(password)}`);
-        const data = await response.json();
-
-        if (data.status === "success") {
-          localStorage.setItem("studentData", JSON.stringify(data.student));
-          window.location.href = "student-portal.html";
-        } else {
-          alert("Invalid credentials. Please try again.");
+        if (!user || !pass) {
+            feedback.textContent = "Please enter both username and password.";
+            return;
         }
-      } catch (error) {
-        console.error(error);
-        alert("Error connecting to the server.");
-      }
 
-      document.getElementById("spinner").style.display = "none";
-      document.getElementById("studentSubmit").disabled = false;
+        btnText.textContent = "Logging in...";
+        spinner.style.display = "inline-block";
+        submitBtn.disabled = true;
+        feedback.textContent = "";
+        submitBtn.style.background = "linear-gradient(90deg,var(--accent-1),var(--accent-2))"; // Reset background
+
+        // Simulate network delay for a better user experience
+        setTimeout(() => {
+            if (user === adminFixedUser && pass === adminFixedPass) {
+                btnText.textContent = "Access Granted!";
+                submitBtn.style.background = "#2ecc71"; // Success color
+                setTimeout(() => {
+                    window.location.href = "admin-dashboard.html";
+                }, 500);
+            } else {
+                btnText.textContent = "Login";
+                spinner.style.display = "none";
+                submitBtn.disabled = false;
+                submitBtn.style.background = "";
+                feedback.textContent = "Invalid credentials. Try Again";
+            }
+        }, 1500); // 1.5 second delay
     };
 
-    /***************
-     * Small UI helpers: close modal on outside click is handled above
-     ***************/
+    // Student login - ENHANCED with loading state
+    document.getElementById("studentSubmit").onclick = async () => {
+        const username = document.getElementById("studentUser").value.trim();
+        const password = document.getElementById("studentPass").value.trim();
+        const submitBtn = document.getElementById("studentSubmit");
+        const btnText = submitBtn.querySelector(".btn-text");
+        const spinner = submitBtn.querySelector(".spinner");
+        const feedback = document.getElementById("studentFeedback");
+
+        if (!username || !password) {
+            feedback.textContent = "Please enter both username and password.";
+            return;
+        }
+
+        btnText.textContent = "Verifying...";
+        spinner.style.display = "inline-block";
+        submitBtn.disabled = true;
+        feedback.textContent = "";
+        submitBtn.style.background = "linear-gradient(90deg,var(--accent-1),var(--accent-2))"; // Reset background
+
+        try {
+            // Note: The original fetch logic is kept here for function.
+            const response = await fetch(`${studentSheetUrl}?user=${encodeURIComponent(username)}&pass=${encodeURIComponent(password)}`);
+            const data = await response.json();
+
+            if (data.status === "success") {
+                btnText.textContent = "Access Granted!";
+                submitBtn.style.background = "#2ecc77"; // Success color
+                localStorage.setItem("studentData", JSON.stringify(data.student));
+                setTimeout(() => {
+                    window.location.href = "student-portal.html";
+                }, 500);
+            } else {
+                feedback.textContent = "Invalid credentials. Please try again.";
+            }
+        } catch (error) {
+            console.error(error);
+            feedback.textContent = "Error connecting to the server.";
+        }
+
+        if (btnText.textContent.includes("Verifying") || btnText.textContent === "Login") { // Reset if not successful
+          btnText.textContent = "Login";
+          submitBtn.style.background = "";
+        }
+        spinner.style.display = "none";
+        submitBtn.disabled = false;
+    };
+
 
     /***************
-     * Animated counters for stats
+     * Animated counters for stats (FIXED: added '+' to final count)
      ***************/
     const counters = [
-      { id: 'countStudents', to: 520 },
-      { id: 'countCourses', to: 12 },
-      { id: 'countBatches', to: 8 }
+      { id: 'countStudents', to: 650 }, 
+      { id: 'countCourses', to: 15 },
+      { id: 'countBatches', to: 10 }
     ];
 
-    function animateCount(el, to, duration=1400){
+    function animateCount(el, to, duration=1500){
       let start = 0;
       const stepTime = Math.max(20, Math.floor(duration / to));
       const timer = setInterval(() => {
         start += Math.ceil(to / (duration/stepTime));
         if (start >= to){ start = to; clearInterval(timer); }
-        el.textContent = start;
+        // The fix is here: ensuring '+' is used on final count
+        el.textContent = start + (start === to ? "+" : ""); 
       }, stepTime);
     }
 
-    // trigger when visible
     const obs = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -741,24 +862,10 @@
     let tpos = 0;
     setInterval(() => {
       if (!testCards) return;
-      tpos += 270;
+      tpos += 318;
       if (tpos > testCards.scrollWidth - testCards.clientWidth) tpos = 0;
       testCards.scrollTo({ left: tpos, behavior: 'smooth' });
-    }, 4200);
-
-    /***************
-     * Accessibility: close modals via ESC
-     ***************/
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        document.querySelectorAll('.modal.show').forEach(m => m.classList.remove('show'));
-      }
-    });
-
-    /***************
-     * Preserve your existing behavior for clicking outside to close -
-     * already handled by the window click handler above.
-     ***************/
+    }, 4500);
 
   </script>
 </body>
