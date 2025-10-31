@@ -30,8 +30,10 @@
       background: var(--bg);
       color:#111827;
       -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
+      -moz-osx-smoothing:grayscale;
       line-height:1.6;
+      /* FIX: Prevents horizontal scroll on small screens */
+      overflow-x: hidden;
     }
 
     a{color:inherit;text-decoration:none}
@@ -226,11 +228,11 @@
     /* responsive */
     @media (max-width:1000px){
       
-      /* --- HEADER MOBILE FIX STARTS HERE (FIXED) --- */
+      /* --- HEADER MOBILE FIX STARTS HERE --- */
       /* Hide the navigation links on smaller screens and prepare for dropdown */
       .nav-links{
         display: none; 
-        position: fixed; /* Changed from absolute to fixed to prevent overlap on scroll */
+        position: absolute;
         top: 76px; /* Position right below the fixed header */
         left: 0;
         right: 0;
@@ -242,8 +244,6 @@
         border-bottom-left-radius: var(--radius);
         border-bottom-right-radius: var(--radius);
         padding: 10px 0;
-        max-height: calc(100vh - 76px); /* Restrict max-height */
-        overflow-y: auto; /* Enable scrolling if content is long */
       }
       .nav-links a{
         padding: 12px 20px;
