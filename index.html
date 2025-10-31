@@ -281,6 +281,11 @@
       .features{grid-template-columns:1fr}
       .footer-inner{grid-template-columns:1fr;gap:40px}
       .logo div{display:none}
+
+      /* FIX: Prevent horizontal scrolling/cutting issue on small screens */
+      body {
+        overflow-x: hidden;
+      }
     }
     /* tiny helpers */
     .muted{color:var(--muted)}
@@ -441,7 +446,7 @@
           <div class="course-image-wrapper">
             <img src="images/course-ccc.jpg" alt="CCC" />
           </div>
-          <h3>CCC (Computer Concepts)</h3>
+          <h3>CCC (Course on Computer Concepts)</h3>
           <button class="small-btn" onclick="openCourse('ccc')">View Details</button>
         </div>
 
