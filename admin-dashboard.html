@@ -4,85 +4,114 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard | SR Study Library</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* --- ENHANCED MODERN STYLES --- */
     :root {
-      --primary: #007bff;
-      --primary-dark: #0056b3;
-      --accent: #00c4ff;
-      --bg: #f5f8ff;
-      --card-bg: rgba(255, 255, 255, 0.85);
-      --sidebar-bg: rgba(0, 123, 255, 0.9);
+      --primary: #4a90e2; 
+      --primary-dark: #357bd8;
+      --accent: #06c7e3; 
+      --bg: #f7f9fc; 
+      --card-bg: #ffffff;
+      --sidebar-bg: #1e3a8a; 
       --text-dark: #2c3e50;
       --text-light: #fff;
+      --shadow-subtle: 0 4px 6px rgba(0, 0, 0, 0.08);
+      --shadow-card: 0 10px 20px rgba(0, 0, 0, 0.05);
+      --success: #2ecc71; 
+      --danger: #e74c3c; 
     }
 
     body.dark {
-      --bg: #0d1117;
-      --card-bg: rgba(22, 27, 34, 0.9);
-      --sidebar-bg: rgba(1, 30, 64, 0.95);
-      --text-dark: #f0f6fc;
+      --bg: #121212; 
+      --card-bg: #1e1e1e;
+      --sidebar-bg: #1f2937; 
+      --text-dark: #e0e0e0;
+      --shadow-subtle: 0 4px 6px rgba(0, 0, 0, 0.25);
+      --shadow-card: 0 10px 20px rgba(0, 0, 0, 0.15);
     }
 
     body {
       margin: 0;
-      font-family: "Poppins", sans-serif;
+      font-family: 'Poppins', sans-serif;
       background: var(--bg);
       display: flex;
       height: 100vh;
       overflow: hidden;
-      transition: background 0.3s ease;
+      transition: background 0.4s ease;
+      scroll-behavior: smooth; /* Added smooth scrolling */
     }
 
-    /* SIDEBAR */
+    /* --- SIDEBAR --- */
     .sidebar {
-      width: 250px;
+      width: 260px;
       background: var(--sidebar-bg);
       color: var(--text-light);
       display: flex;
       flex-direction: column;
-      padding: 25px 20px;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(14px);
-      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+      padding: 30px 20px;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: 6px 0 15px rgba(0, 0, 0, 0.2);
+      z-index: 10;
     }
 
     .sidebar h2 {
+      font-size: 24px;
+      margin-bottom: 40px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
       text-align: center;
-      font-size: 22px;
-      margin-bottom: 30px;
-      letter-spacing: 0.5px;
     }
 
     .sidebar a {
       text-decoration: none;
       color: var(--text-light);
-      padding: 12px 15px;
-      border-radius: 10px;
-      margin: 5px 0;
+      padding: 14px 18px;
+      border-radius: 12px;
+      margin: 6px 0;
       display: flex;
       align-items: center;
       gap: 10px;
-      transition: all 0.25s ease;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
 
     .sidebar a:hover {
-      background: rgba(255, 255, 255, 0.25);
-      transform: translateX(6px);
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateX(3px); /* Subtle shift for modern feel */
+    }
+    
+    .sidebar a.active {
+        background: rgba(255, 255, 255, 0.25);
+    }
+
+    .sidebar a.active::before { 
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--accent);
     }
 
     .theme-toggle {
       margin-top: auto;
-      background: rgba(255, 255, 255, 0.2);
-      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       color: white;
-      padding: 10px;
-      border-radius: 8px;
+      padding: 12px;
+      border-radius: 10px;
       cursor: pointer;
+      font-weight: 500;
       transition: 0.3s;
     }
 
     .theme-toggle:hover {
-      background: rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.25);
     }
 
     .toggle-btn {
@@ -100,72 +129,142 @@
       z-index: 1000;
     }
 
-    /* MAIN AREA */
+    /* --- MAIN AREA --- */
     .main {
       flex: 1;
-      padding: 20px 25px;
+      padding: 30px 40px;
       overflow-y: auto;
-      transition: 0.3s;
+      transition: padding 0.3s;
     }
 
     header {
       background: var(--card-bg);
-      border-radius: 12px;
-      padding: 18px 25px;
-      font-size: 22px;
-      font-weight: 600;
+      border-radius: 15px;
+      padding: 20px 30px;
+      font-size: 24px;
+      font-weight: 700;
       color: var(--text-dark);
-      margin-bottom: 25px;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+      box-shadow: var(--shadow-subtle);
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 15px;
+      position: sticky; /* Sticky header for better UX */
+      top: 0;
+      z-index: 5;
     }
 
-    header button {
-      background: #e74c3c;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      padding: 8px 14px;
+    .header-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .add-record-btn { /* New Button Style */
+        background: var(--success);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 18px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.3s, transform 0.3s;
+    }
+
+    .add-record-btn:hover {
+        background: #27ae60;
+        transform: translateY(-2px);
+    }
+
+    header button#logoutBtnTop {
+      background: var(--danger);
+      border-radius: 8px;
+      padding: 10px 18px;
       cursor: pointer;
-      transition: 0.3s;
+      font-weight: 600;
+      transition: background 0.3s, transform 0.3s;
     }
 
-    header button:hover {
+    header button#logoutBtnTop:hover {
       background: #c0392b;
+      transform: translateY(-2px);
+    }
+
+    /* --- WIDGETS SECTION --- */
+    .dashboard-widgets {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 25px;
+        margin-bottom: 30px;
+    }
+
+    .widget-card {
+        background: var(--card-bg);
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: var(--shadow-subtle);
+        transition: transform 0.3s ease;
+        border-left: 5px solid var(--primary);
+    }
+    
+    .widget-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .widget-card h3 {
+        margin: 0 0 5px 0;
+        font-size: 14px;
+        color: var(--primary);
+        font-weight: 500;
+        text-transform: uppercase;
+    }
+
+    .widget-card p {
+        margin: 0;
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--text-dark);
     }
 
     .container {
       background: var(--card-bg);
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-      padding: 20px;
-      backdrop-filter: blur(10px);
-      overflow-x: auto;
-      white-space: nowrap;
+      border-radius: 15px;
+      box-shadow: var(--shadow-card);
+      padding: 30px;
+      /* Remove white-space: nowrap to allow content to wrap if needed */
     }
 
     h2 {
-      color: var(--text-dark);
-      font-size: 20px;
-      margin-bottom: 10px;
+      color: var(--primary-dark);
+      font-size: 22px;
+      margin-bottom: 20px;
+      font-weight: 600;
     }
 
     #filters {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 20px;
+      gap: 15px;
+      margin-bottom: 25px;
     }
 
     #searchBar, #statusFilter {
-      padding: 10px 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 14px;
+      padding: 12px 15px;
+      border: 1px solid #dcdcdc;
+      border-radius: 10px;
+      font-size: 15px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      background-color: var(--card-bg);
+      color: var(--text-dark);
+    }
+    
+    #searchBar:focus, #statusFilter:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+      outline: none;
     }
 
     #searchBar {
@@ -177,97 +276,263 @@
       width: 160px;
     }
 
+    /* --- TABLE STYLES --- */
     table {
       width: 100%;
       border-collapse: collapse;
       font-size: 14px;
-      border-radius: 10px;
+      border-radius: 12px;
       overflow: hidden;
-      min-width: 700px;
+      min-width: 800px; /* Increased minimum width to accommodate action button */
+      table-layout: auto; /* Allow column width to adjust */
     }
 
     th {
       background: var(--primary);
       color: #fff;
       text-align: left;
-      padding: 12px;
+      padding: 14px 12px;
       cursor: pointer;
       position: sticky;
       top: 0;
       z-index: 1;
+      font-weight: 600;
     }
+    
+    table thead tr:first-child th:first-child { border-top-left-radius: 12px; }
+    table thead tr:first-child th:last-child { border-top-right-radius: 12px; }
 
     td {
-      padding: 10px;
-      border-bottom: 1px solid #eee;
+      padding: 15px 12px;
+      border-bottom: 1px solid #f0f0f0;
       color: var(--text-dark);
+    }
+    
+    body.dark td {
+      border-bottom: 1px solid #333;
     }
 
     tr:hover {
-      background: rgba(0, 123, 255, 0.08);
-      transition: 0.3s;
+      background: rgba(74, 144, 226, 0.06);
+      transition: background 0.3s;
     }
 
+    .action-btn { /* New action button inside table */
+        background: var(--accent);
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-size: 12px;
+    }
+    .action-btn:hover {
+        background: #00a0cc;
+        transform: scale(1.05);
+    }
+
+
+    /* --- PAGINATION & DOWNLOAD BUTTONS (Minor Refinements) --- */
     .pagination {
       text-align: center;
-      margin-top: 15px;
+      margin-top: 25px;
     }
 
     .pagination button {
       background: var(--primary);
       color: white;
       border: none;
-      margin: 3px;
-      padding: 8px 14px;
-      border-radius: 6px;
+      margin: 5px;
+      padding: 10px 16px;
+      border-radius: 8px;
       cursor: pointer;
+      font-weight: 500;
       transition: 0.3s;
     }
 
-    .pagination button:hover {
+    .pagination button:hover:not(.active) {
       background: var(--primary-dark);
+      transform: translateY(-1px);
     }
 
     .pagination button.active {
       background: var(--primary-dark);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
 
     .download-btn {
       background: var(--accent);
       border: none;
-      padding: 8px 14px;
+      padding: 10px 18px;
       color: white;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
-      margin-left: 10px;
       font-size: 14px;
+      font-weight: 600;
+      transition: 0.3s;
     }
 
     .download-btn:hover {
       background: #00a0cc;
+      transform: translateY(-2px);
     }
 
-    /* MOBILE */
+    /* --- MODAL STYLES (NEW FEATURE) --- */
+    .modal {
+        position: fixed;
+        z-index: 10000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+        display: none; /* Hidden by default */
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(5px);
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    .modal-content {
+        background-color: var(--card-bg);
+        margin: auto;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: var(--shadow-card);
+        width: 90%;
+        max-width: 500px;
+        animation: slideIn 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        color: var(--text-dark);
+    }
+
+    .close-btn {
+        color: var(--danger);
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .close-btn:hover,
+    .close-btn:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    
+    .modal-content h3 {
+        color: var(--primary);
+        margin-top: 0;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
+    }
+
+    /* Input Styling for Modal/Form */
+    .form-group {
+        position: relative;
+        margin-bottom: 25px;
+    }
+
+    .form-group input, .form-group select {
+        width: 100%;
+        padding: 15px 10px 5px 10px;
+        border: none;
+        border-bottom: 2px solid #ccc;
+        background: transparent;
+        font-size: 16px;
+        color: var(--text-dark);
+        transition: border-bottom-color 0.3s;
+    }
+    
+    .form-group input:focus, .form-group select:focus {
+        border-bottom-color: var(--primary);
+        outline: none;
+    }
+
+    .form-group label {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 16px;
+        color: #777;
+        transition: 0.3s ease-out;
+        pointer-events: none;
+    }
+
+    /* Floating label effect */
+    .form-group input:focus + label,
+    .form-group input:not(:placeholder-shown) + label {
+        top: -10px;
+        left: 0;
+        font-size: 12px;
+        color: var(--primary);
+    }
+
+    /* Select box label position fix */
+    .form-group select + label {
+        top: -10px;
+        left: 0;
+        font-size: 12px;
+        color: var(--primary);
+    }
+    
+    .modal-submit-btn {
+        width: 100%;
+        background: var(--primary);
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .modal-submit-btn:hover {
+        background: var(--primary-dark);
+    }
+
+    /* Keyframe Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+        from { transform: translateY(-50px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* --- MOBILE --- */
     @media(max-width: 768px) {
       .sidebar {
-        position: fixed;
-        left: -260px;
-        top: 0;
-        bottom: 0;
-        z-index: 999;
+        left: -280px;
       }
 
-      .sidebar.active {
-        left: 0;
-      }
-
-      .toggle-btn {
-        display: block;
+      .main {
+        padding: 20px;
       }
 
       header {
         flex-direction: column;
         align-items: flex-start;
+        padding: 15px 20px;
+        position: static;
+      }
+      
+      .header-actions {
+          width: 100%;
+          justify-content: space-between;
+      }
+      
+      .header-actions button {
+          flex: 1;
+      }
+
+      .dashboard-widgets {
+          grid-template-columns: 1fr;
       }
 
       table {
@@ -283,25 +548,47 @@
 
   <div class="sidebar" id="sidebar">
     <h2>📘 SR Admin</h2>
-    <a href="index.html">🏠 Home</a>
-    <!-- <a href="student-portal.html">🧾 Update Details</a> -->
+    <a href="#" class="active">📊 Dashboard</a>
+    <a href="#">📋 Records View</a>
+    <a href="#">🧑‍💻 User Management</a>
+    <a href="#">⚙️ Settings</a>
     <a href="#" id="logoutBtn">🚪 Logout</a>
     <button class="theme-toggle" onclick="toggleTheme()">🌓 Toggle Theme</button>
   </div>
 
   <div class="main">
     <header>
-      <span>Admin Dashboard — Student Records</span>
-      <div>
-        <button class="download-btn" onclick="downloadCSV()">⬇ Download CSV</button>
+      <span id="headerTitle">Admin Dashboard — Student Records</span>
+      <div class="header-actions">
+        <button class="add-record-btn" onclick="openAddRecordModal()">➕ Add New Record</button>
+        <button class="download-btn" onclick="downloadCSV()">⬇ CSV</button>
         <button id="logoutBtnTop">Logout</button>
       </div>
     </header>
+    
+    <div class="dashboard-widgets">
+        <div class="widget-card" style="border-left-color: var(--success);">
+            <h3>Total Students</h3>
+            <p id="totalStudentsCount">...</p>
+        </div>
+        <div class="widget-card" style="border-left-color: var(--primary);">
+            <h3>Active Users</h3>
+            <p id="activeStudentsCount">...</p>
+        </div>
+        <div class="widget-card" style="border-left-color: var(--danger);">
+            <h3>Inactive Users</h3>
+            <p id="inactiveStudentsCount">...</p>
+        </div>
+        <div class="widget-card" style="border-left-color: var(--accent);">
+            <h3>Records Shown</h3>
+            <p id="recordsDisplayed">0</p>
+        </div>
+    </div>
 
     <div class="container">
       <h2>Student Data Overview</h2>
       <div id="filters">
-        <input type="text" id="searchBar" placeholder="Search by name or course..." />
+        <input type="text" id="searchBar" placeholder="Search by name, course, or username..." />
         <select id="statusFilter">
           <option value="all">All Status</option>
           <option value="Active">Active</option>
@@ -313,52 +600,134 @@
       <div class="pagination" id="pagination"></div>
     </div>
   </div>
+  
+  <div id="addRecordModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeAddRecordModal()">&times;</span>
+      <h3>➕ Add New Student Record</h3>
+      <form id="addRecordForm">
+        
+        <div class="form-group">
+            <input type="text" id="addName" name="Name" placeholder=" " required />
+            <label for="addName">Full Name</label>
+        </div>
+
+        <div class="form-group">
+            <input type="text" id="addCourse" name="Course" placeholder=" " required />
+            <label for="addCourse">Course/Program</label>
+        </div>
+        
+        <div class="form-group">
+            <input type="text" id="addUsername" name="Username" placeholder=" " required />
+            <label for="addUsername">Username (Unique ID)</label>
+        </div>
+        
+        <div class="form-group">
+             <select id="addStatus" name="Status" required>
+                <option value="" disabled selected>Select Status</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+            </select>
+             <label for="addStatus">Status</label>
+        </div>
+        
+        <button type="submit" class="modal-submit-btn">Submit New Record</button>
+      </form>
+    </div>
+  </div>
 
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbw00d-hkEhA3iUinaeKaSFvHFOfN6Ig43cXSFE_jWQ55tsKgGhtd-vv3fSOdYtBYWn_/exec";
     let allStudents = [];
     let currentPage = 1;
     const rowsPerPage = 10;
+    let currentSort = { column: null, order: 'asc' };
 
+    /* --- DATA LOADING & WIDGETS --- */
     async function loadStudents() {
+      document.getElementById("tableContainer").innerHTML = "<p>⏳ Fetching data from Google Sheet...</p>";
+      document.getElementById("totalStudentsCount").textContent = "Loading...";
+
       try {
         const res = await fetch(scriptURL);
         const data = await res.json();
         if (data.status === "all" && Array.isArray(data.students)) {
           allStudents = data.students.filter(stu => stu.username && stu.username.trim() !== "-");
-          renderTable(allStudents);
+          updateWidgets(allStudents);
+          applyFilters(); 
         } else {
-          document.getElementById("tableContainer").innerHTML = "<p>⚠️ Unable to fetch student data.</p>";
+          document.getElementById("tableContainer").innerHTML = "<p>⚠️ Unable to fetch student data: Invalid response format.</p>";
         }
-      } catch {
-        document.getElementById("tableContainer").innerHTML = "<p>⚠️ Error loading data.</p>";
+      } catch (e) {
+        console.error("Error loading data:", e);
+        document.getElementById("tableContainer").innerHTML = "<p>⚠️ Error loading data. Check console for details.</p>";
       }
     }
+    
+    function updateWidgets(students) {
+        const total = students.length;
+        const active = students.filter(stu => stu.status && stu.status.toLowerCase() === 'active').length;
+        const inactive = total - active;
+        
+        document.getElementById("totalStudentsCount").textContent = total;
+        document.getElementById("activeStudentsCount").textContent = active;
+        document.getElementById("inactiveStudentsCount").textContent = inactive;
+    }
 
+    /* --- TABLE RENDERING & FILTERING --- */
     function renderTable(students) {
       if (!students.length) {
-        document.getElementById("tableContainer").innerHTML = "<p>No records found.</p>";
+        document.getElementById("tableContainer").innerHTML = "<p>No records found matching your filters.</p>";
+        document.getElementById("pagination").innerHTML = "";
+        document.getElementById("recordsDisplayed").textContent = "0";
         return;
       }
 
-      const headers = Object.keys(students[0]);
+      // Add 'Actions' column header if it's not present
+      let headers = Object.keys(students[0]);
+      if (headers[headers.length - 1].toLowerCase() !== 'actions') {
+          headers.push('Actions');
+      }
+
       const start = (currentPage - 1) * rowsPerPage;
       const end = start + rowsPerPage;
       const paginated = students.slice(start, end);
 
       let html = "<div style='overflow-x:auto;'><table><thead><tr>";
-      headers.forEach(h => html += `<th onclick="sortTable('${h}')">${h.toUpperCase()}</th>`);
+      headers.forEach(h => {
+        let indicator = '';
+        if (h !== 'Actions') {
+            if (currentSort.column === h) {
+                indicator = currentSort.order === 'asc' ? ' ▲' : ' ▼';
+            }
+            html += `<th onclick="sortTable('${h}')">${h.toUpperCase()}${indicator}</th>`;
+        } else {
+            html += `<th>${h.toUpperCase()}</th>`;
+        }
+      });
       html += "</tr></thead><tbody>";
 
       paginated.forEach(stu => {
         html += "<tr>";
-        headers.forEach(h => html += `<td>${stu[h] || "-"}</td>`);
+        headers.forEach(h => {
+            if (h === 'Actions') {
+                // New Action button
+                html += `<td><button class="action-btn" onclick="viewDetails('${stu.username}')">View Details</button></td>`;
+            } else {
+                html += `<td>${stu[h] || "-"}</td>`;
+            }
+        });
         html += "</tr>";
       });
       html += "</tbody></table></div>";
       document.getElementById("tableContainer").innerHTML = html;
-
+      
+      document.getElementById("recordsDisplayed").textContent = paginated.length;
       renderPagination(students.length);
+    }
+
+    function viewDetails(username) {
+        alert(`Viewing details for student: ${username}\n(In a real app, this would open a specific record editor/viewer)`);
     }
 
     function renderPagination(totalRows) {
@@ -372,37 +741,91 @@
 
     function changePage(page) {
       currentPage = page;
-      applyFilters();
+      applyFilters(false);
     }
 
-    function applyFilters() {
+    function applyFilters(resetPage = true) {
+      if (resetPage) currentPage = 1; 
+
       const search = document.getElementById("searchBar").value.toLowerCase();
       const status = document.getElementById("statusFilter").value;
-      const filtered = allStudents.filter(stu => {
+      let filtered = allStudents;
+
+      // 1. Filter
+      filtered = filtered.filter(stu => {
         const sMatch = (stu.name && stu.name.toLowerCase().includes(search)) ||
-                       (stu.course && stu.course.toLowerCase().includes(search));
+                       (stu.course && stu.course.toLowerCase().includes(search)) ||
+                       (stu.username && stu.username.toLowerCase().includes(search));
         const statusMatch = status === "all" ||
                             (stu.status && stu.status.toLowerCase() === status.toLowerCase());
         return sMatch && statusMatch;
       });
+      
+      // 2. Sort
+      if (currentSort.column) {
+          sortData(filtered, currentSort.column, currentSort.order === 'asc');
+      }
+
       renderTable(filtered);
     }
 
-    document.getElementById("searchBar").addEventListener("input", applyFilters);
-    document.getElementById("statusFilter").addEventListener("change", applyFilters);
+    function sortData(data, col, asc) {
+         data.sort((a, b) => {
+            const va = (a[col] || "").toString().toLowerCase();
+            const vb = (b[col] || "").toString().toLowerCase();
+            return asc ? va.localeCompare(vb) : vb.localeCompare(va);
+        });
+    }
 
     function sortTable(col) {
-      const th = document.querySelector(`th[onclick="sortTable('${col}')"]`);
-      const asc = th?.dataset.order !== "asc";
-      allStudents.sort((a, b) => {
-        const va = (a[col] || "").toString().toLowerCase();
-        const vb = (b[col] || "").toString().toLowerCase();
-        return asc ? va.localeCompare(vb) : vb.localeCompare(va);
-      });
-      document.querySelectorAll("th").forEach(h => delete h.dataset.order);
-      th.dataset.order = asc ? "asc" : "desc";
-      applyFilters();
+        if (col === 'Actions') return; // Do not sort on Actions column
+        
+        let asc = true;
+        if (currentSort.column === col) {
+            asc = currentSort.order !== 'asc';
+        }
+        
+        currentSort = { column: col, order: asc ? 'asc' : 'desc' };
+        sortData(allStudents, col, asc);
+        applyFilters();
     }
+
+    /* --- MODAL (ADD RECORD) FUNCTIONALITY (NEW) --- */
+    function openAddRecordModal() {
+        document.getElementById('addRecordModal').style.display = 'flex';
+        // Reset form for clean slate
+        document.getElementById('addRecordForm').reset(); 
+    }
+
+    function closeAddRecordModal() {
+        document.getElementById('addRecordModal').style.display = 'none';
+    }
+
+    document.getElementById('addRecordForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+        
+        // Simple data validation (you would do more robust validation in a real app)
+        if (!data.Name || !data.Username) {
+            alert("Please fill in required fields (Name and Username).");
+            return;
+        }
+
+        // Simulate submission to the Google Script (for demonstration, we only alert)
+        // In a real application, you would send a POST request to your script URL here.
+        alert("Simulating API call to add record:\n" + JSON.stringify(data, null, 2));
+
+        // Close modal and ideally, reload/update table data
+        closeAddRecordModal();
+        alert("Record added (Simulated). Reloading data...");
+        // loadStudents(); // Uncomment this line if your script URL supports POSTing and data retrieval
+    });
+
+    /* --- MISC UTILITIES --- */
+    document.getElementById("searchBar").addEventListener("input", () => applyFilters(true));
+    document.getElementById("statusFilter").addEventListener("change", () => applyFilters(true));
 
     function toggleSidebar() {
       document.getElementById("sidebar").classList.toggle("active");
@@ -415,22 +838,53 @@
     function downloadCSV() {
       if (!allStudents.length) return alert("No data to download.");
       const headers = Object.keys(allStudents[0]);
-      const csv = [
-        headers.join(","),
-        ...allStudents.map(row => headers.map(h => `"${(row[h] || "").replace(/"/g, '""')}"`).join(","))
-      ].join("\n");
+      
+      const csvContent = allStudents.map(row => 
+        headers.map(h => `"${(row[h] || "").toString().replace(/"/g, '""')}"`).join(",")
+      ).join("\n");
+      
+      const csv = headers.join(",") + "\n" + csvContent;
 
       const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
       a.download = "student_records.csv";
+      document.body.appendChild(a);
       a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     }
 
+    // Logout Functionality
     document.getElementById("logoutBtn").onclick =
-    document.getElementById("logoutBtnTop").onclick = () => window.location.href = "index.html";
+    document.getElementById("logoutBtnTop").onclick = () => {
+        alert("Logged out successfully!");
+        // window.location.href = "index.html"; 
+    };
+    
+    // Sidebar link functionality (for demonstration)
+    document.querySelectorAll('.sidebar a:not(#logoutBtn)').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+            e.currentTarget.classList.add('active');
+            
+            const linkText = e.currentTarget.textContent.trim().split(/\s+/).slice(1).join(' ');
+            document.getElementById('headerTitle').textContent = `Admin Dashboard — ${linkText}`;
+            
+            const isDashboardView = (linkText === 'Dashboard' || linkText === 'Records View');
+            document.querySelector('.dashboard-widgets').style.display = isDashboardView ? 'grid' : 'none';
+            document.querySelector('.container').style.display = isDashboardView ? 'block' : 'none';
+            
+            if (!isDashboardView) {
+                alert(`Navigating to ${linkText} (Content Placeholder)`);
+            }
+            document.querySelector('.main').scrollTop = 0;
+        });
+    });
 
+    // Initial Data Load
     loadStudents();
   </script>
 </body>
