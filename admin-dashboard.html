@@ -35,7 +35,7 @@
       margin: 0;
       font-family: 'Poppins', sans-serif;
       background: var(--bg);
-      display: flex; /* Default to horizontal layout */
+      display: flex; 
       height: 100vh;
       overflow: hidden;
       transition: background 0.4s ease;
@@ -53,37 +53,36 @@
       transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
       box-shadow: 6px 0 15px rgba(0, 0, 0, 0.2);
       z-index: 100;
-      flex-shrink: 0; /* Important: Prevents sidebar from shrinking on desktop */
+      flex-shrink: 0;
     }
 
-    /* Desktop View (769px and up): Sidebar is static part of flex layout */
+    /* Desktop View (769px and up) */
     @media (min-width: 769px) {
         .sidebar {
-            position: static; /* Normal flow */
-            transform: none; /* No translation */
+            position: static; 
+            transform: none; 
         }
         .toggle-btn {
             display: none !important;
         }
     }
 
-    /* Mobile View (768px and down): Sidebar is fixed and off-screen */
+    /* Mobile View (768px and down) */
     @media (max-width: 768px) {
         .sidebar {
             position: fixed;
             height: 100%;
             left: 0;
             top: 0;
-            transform: translateX(-100%); /* Completely hide off-screen */
+            transform: translateX(-100%);
             width: 280px; 
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
 
         .sidebar.active {
-            transform: translateX(0); /* Slide in */
+            transform: translateX(0);
         }
         
-        /* Overlay when sidebar is open */
         .sidebar-overlay {
             position: fixed;
             top: 0;
@@ -156,12 +155,8 @@
       transition: 0.3s;
     }
 
-    .theme-toggle:hover {
-      background: rgba(255, 255, 255, 0.25);
-    }
-
     .toggle-btn {
-      display: none; /* Hidden by default, shown only on mobile */
+      display: none; 
       background: var(--primary);
       color: #fff;
       border: none;
@@ -183,11 +178,11 @@
 
     /* --- MAIN AREA --- */
     .main {
-      flex: 1; /* Allows main content to take up the remaining space on desktop */
+      flex: 1; 
       padding: 30px 40px;
       overflow-y: auto;
       transition: padding 0.3s;
-      width: 100%; /* Ensures it fills its container */
+      width: 100%; 
       box-sizing: border-box;
     }
 
@@ -227,9 +222,16 @@
         transition: background 0.3s, transform 0.3s;
     }
 
-    .add-record-btn:hover {
-        background: #27ae60;
-        transform: translateY(-2px);
+    .download-btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 18px;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.3s, transform 0.3s;
     }
 
     header button#logoutBtnTop {
@@ -239,11 +241,7 @@
       cursor: pointer;
       font-weight: 600;
       transition: background 0.3s, transform 0.3s;
-    }
-
-    header button#logoutBtnTop:hover {
-      background: #c0392b;
-      transform: translateY(-2px);
+      color: white;
     }
 
     /* --- WIDGETS SECTION --- */
@@ -263,11 +261,6 @@
         border-left: 5px solid var(--primary);
     }
     
-    .widget-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
-    }
-
     .widget-card h3 {
         margin: 0 0 5px 0;
         font-size: 14px;
@@ -289,45 +282,64 @@
       box-shadow: var(--shadow-card);
       padding: 30px;
     }
-
-    h2 {
-      color: var(--primary-dark);
-      font-size: 22px;
-      margin-bottom: 20px;
-      font-weight: 600;
-    }
-
+    
+    /* --- SEARCH BAR AND FILTER LAYOUT (FIXED) --- */
     #filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin-bottom: 25px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 25px;
+        padding: 15px; 
+        background: var(--bg); 
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
+    }
+    
+    body.dark #filters {
+        background: #1e1e1e;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
     }
 
+    /* Apply new styles to all filter/search inputs */
     #searchBar, #statusFilter {
-      padding: 12px 15px;
-      border: 1px solid #dcdcdc;
-      border-radius: 10px;
-      font-size: 15px;
-      transition: border-color 0.3s, box-shadow 0.3s;
-      background-color: var(--card-bg);
-      color: var(--text-dark);
+        padding: 12px 18px; 
+        border: 2px solid #e0e0e0; 
+        border-radius: 8px; 
+        font-size: 15px;
+        transition: border-color 0.3s, box-shadow 0.3s;
+        background-color: var(--card-bg);
+        color: var(--text-dark);
+    }
+    
+    body.dark #searchBar, body.dark #statusFilter {
+        border-color: #444;
     }
     
     #searchBar:focus, #statusFilter:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
-      outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2); 
+        outline: none;
     }
 
     #searchBar {
-      flex: 1;
-      min-width: 200px;
+        flex: 1;
+        min-width: 250px; 
     }
 
+    /* Styling for the dropdown selector */
     #statusFilter {
-      width: 160px;
+        width: 180px; 
+        -webkit-appearance: none; 
+        -moz-appearance: none;    
+        appearance: none;         
+        
+        /* Custom dropdown arrow (SVG data URI) */
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%234A90E2" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 15px center;
+        padding-right: 35px; 
     }
+    /* --- END FILTER FIX --- */
 
     /* --- TABLE STYLES --- */
     table {
@@ -352,19 +364,12 @@
       font-weight: 600;
     }
     
-    table thead tr:first-child th:first-child { border-top-left-radius: 12px; }
-    table thead tr:first-child th:last-child { border-top-right-radius: 12px; }
-
     td {
       padding: 15px 12px;
       border-bottom: 1px solid #f0f0f0;
       color: var(--text-dark);
     }
     
-    body.dark td {
-      border-bottom: 1px solid #333;
-    }
-
     tr:hover {
       background: rgba(74, 144, 226, 0.06);
       transition: background 0.3s;
@@ -380,46 +385,18 @@
         transition: 0.3s;
         font-size: 12px;
     }
-    .action-btn:hover {
-        background: #00a0cc;
-        transform: scale(1.05);
+    
+    .username-link { 
+        color: var(--primary);
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: underline;
+        transition: color 0.2s;
+    }
+    .username-link:hover {
+        color: var(--primary-dark);
     }
 
-
-    /* --- PAGINATION & DOWNLOAD BUTTONS (Minor Refinements) --- */
-    .pagination {
-      text-align: center;
-      margin-top: 25px;
-    }
-
-    .pagination button {
-      background: var(--primary);
-      color: white;
-      border: none;
-      margin: 5px;
-      padding: 10px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 500;
-      transition: 0.3s;
-    }
-
-    .pagination button.active {
-      background: var(--primary-dark);
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
-
-    .download-btn {
-      background: var(--accent);
-      border: none;
-      padding: 10px 18px;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 600;
-      transition: 0.3s;
-    }
 
     /* --- MODAL STYLES --- */
     .modal {
@@ -449,61 +426,93 @@
         animation: slideIn 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         color: var(--text-dark);
     }
-
-    .close-btn {
-        color: var(--danger);
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        transition: 0.3s;
+    
+    /* Details Display Styling */
+    .details-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px dashed #eee;
     }
     
-    /* Input/Form styling... (omitted for brevity, assume it's correct) */
+    .details-row:last-child {
+        border-bottom: none;
+    }
+    
+    .details-label {
+        font-weight: 500;
+        color: #777;
+    }
+    
+    .details-value {
+        font-weight: 600;
+        color: var(--text-dark);
+        text-align: right;
+        max-width: 60%;
+    }
+
+    /* Form and general modal styling */
+    .close-btn { color: var(--danger); float: right; font-size: 28px; font-weight: bold; transition: 0.3s; }
+    .close-btn:hover { color: #000; text-decoration: none; cursor: pointer; }
     .form-group { position: relative; margin-bottom: 25px; }
     .form-group input, .form-group select { width: 100%; padding: 15px 10px 5px 10px; border: none; border-bottom: 2px solid #ccc; background: transparent; font-size: 16px; color: var(--text-dark); transition: border-bottom-color 0.3s; }
-    .form-group input:focus + label, .form-group input:not(:placeholder-shown) + label { top: -10px; left: 0; font-size: 12px; color: var(--primary); }
-    .form-group select + label { top: -10px; left: 0; font-size: 12px; color: var(--primary); }
-    .form-group label { position: absolute; top: 10px; left: 10px; font-size: 16px; color: #777; transition: 0.3s ease-out; pointer-events: none; }
     .modal-submit-btn { width: 100%; background: var(--primary); color: white; padding: 12px; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; transition: 0.3s; }
-    /* Keyframe Animations... (omitted for brevity, assume it's correct) */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideIn { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    
+    /* Pagination Style */
+    .pagination {
+        display: flex;
+        justify-content: flex-end; 
+        align-items: center;
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid #e0e0e0;
+        gap: 8px; 
+    }
+    
+    body.dark .pagination {
+        border-top: 1px solid #4b5563;
+    }
 
+    .pagination button {
+        background: none;
+        border: 1px solid #ccc;
+        color: var(--text-dark);
+        padding: 8px 14px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        min-width: 40px;
+        text-align: center;
+    }
+
+    .pagination button:hover {
+        background: var(--primary);
+        color: var(--text-light);
+        border-color: var(--primary);
+    }
+
+    .pagination button.active {
+        background: var(--primary);
+        color: var(--text-light);
+        border-color: var(--primary);
+        font-weight: 600;
+        box-shadow: 0 2px 5px rgba(74, 144, 226, 0.4);
+    }
 
     /* --- MOBILE SPECIFIC FIXES --- */
     @media(max-width: 768px) {
-      .main {
-        padding: 20px;
-        width: 100%; 
-        box-sizing: border-box;
-      }
-      
-      .toggle-btn {
-        display: block; 
-      }
-
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 15px 20px;
-        position: static;
-      }
-      
-      .header-actions {
-          width: 100%;
-          justify-content: space-between;
-      }
-      
-      .header-actions button {
-          flex: 1;
-      }
-
-      .dashboard-widgets {
-          grid-template-columns: 1fr;
-      }
-
-      table {
-        font-size: 12px;
-        min-width: 600px;
-      }
+      .main { padding: 20px; width: 100%; box-sizing: border-box; }
+      .toggle-btn { display: block; }
+      header { flex-direction: column; align-items: flex-start; padding: 15px 20px; position: static; }
+      .header-actions { width: 100%; justify-content: space-between; }
+      .header-actions button { flex: 1; }
+      .dashboard-widgets { grid-template-columns: 1fr; }
+      table { font-size: 12px; min-width: 600px; }
+      #filters { flex-direction: column; padding: 10px; }
+      #searchBar, #statusFilter { min-width: 100%; width: 100%; }
     }
   </style>
 </head>
@@ -512,7 +521,7 @@
   <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
 
   <div class="sidebar" id="sidebar">
-    <h2>📘 SR Admin</h2>
+    <h2>SRCA Admin Dashboard</h2>
     <a href="#" class="active" onclick="handleSidebarLinkClick(event)">📊 Dashboard</a>
     <a href="#" onclick="handleSidebarLinkClick(event)">📋 Records View</a>
     <a href="#" onclick="handleSidebarLinkClick(event)">🧑‍💻 User Management</a>
@@ -525,7 +534,7 @@
 
   <div class="main">
     <header>
-      <span id="headerTitle">Admin Dashboard — Student Records</span>
+      <span id="headerTitle">SRCA Admin Dashboard — Student Records</span>
       <div class="header-actions">
         <button class="add-record-btn" onclick="openAddRecordModal()">➕ Add New Record</button>
         <button class="download-btn" onclick="downloadCSV()">⬇ CSV</button>
@@ -602,12 +611,23 @@
       </form>
     </div>
   </div>
+  
+  <div id="studentDetailsModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeDetailsModal()">&times;</span>
+      <h3 id="detailsModalTitle">Student Details</h3>
+      <div id="studentDetailsContent">
+        </div>
+      <button class="modal-submit-btn" style="margin-top: 20px; background: var(--danger);" onclick="closeDetailsModal()">Close</button>
+    </div>
+  </div>
+
 
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbw00d-hkEhA3iUinaeKaSFvHFOfN6Ig43cXSFE_jWQ55tsKgGhtd-vv3fSOdYtBYWn_/exec";
     let allStudents = [];
     let currentPage = 1;
-    const rowsPerPage = 10;
+    const rowsPerPage = 5;
     let currentSort = { column: null, order: 'asc' };
 
     /* --- DATA LOADING & WIDGETS --- */
@@ -678,6 +698,9 @@
         headers.forEach(h => {
             if (h === 'Actions') {
                 html += `<td><button class="action-btn" onclick="viewDetails('${stu.username}')">View Details</button></td>`;
+            } else if (h.toLowerCase() === 'username') {
+                // Make Username clickable
+                html += `<td><span class="username-link" onclick="viewDetails('${stu.username}')">${stu[h] || "-"}</span></td>`;
             } else {
                 html += `<td>${stu[h] || "-"}</td>`;
             }
@@ -690,10 +713,40 @@
       document.getElementById("recordsDisplayed").textContent = paginated.length;
       renderPagination(students.length);
     }
-
+    
+    // NEW FUNCTIONALITY: Display student details in a formatted modal
     function viewDetails(username) {
-        alert(`Viewing details for student: ${username}\n(In a real app, this would open a specific record editor/viewer)`);
+        const student = allStudents.find(s => s.username === username);
+        if (!student) {
+            alert(`Error: Student with username ${username} not found.`);
+            return;
+        }
+
+        document.getElementById('detailsModalTitle').textContent = `Details for ${student.name || username}`;
+        
+        let detailsHtml = '';
+        // Iterate over the student object to format the data vertically
+        for (const key in student) {
+            // Capitalize the first letter of the key for display
+            const label = key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1').trim();
+            const value = student[key] || "N/A";
+
+            detailsHtml += `
+                <div class="details-row">
+                    <span class="details-label">${label}:</span>
+                    <span class="details-value">${value}</span>
+                </div>
+            `;
+        }
+        
+        document.getElementById('studentDetailsContent').innerHTML = detailsHtml;
+        document.getElementById('studentDetailsModal').style.display = 'flex';
     }
+    
+    function closeDetailsModal() {
+        document.getElementById('studentDetailsModal').style.display = 'none';
+    }
+
 
     function renderPagination(totalRows) {
       const totalPages = Math.ceil(totalRows / rowsPerPage);
@@ -791,7 +844,6 @@
       
       sidebar.classList.toggle("active");
       
-      // Control overlay visibility based on sidebar state
       if (sidebar.classList.contains("active")) {
           overlay.style.display = 'block';
       } else {
@@ -827,8 +879,8 @@
     // Logout Functionality
     document.getElementById("logoutBtn").onclick =
     document.getElementById("logoutBtnTop").onclick = () => {
-        alert("Logged out successfully!");
-        // window.location.href = "index.html"; 
+        alert("Logged out successfully! Redirecting to index.html...");
+        window.location.href = "index.html"; 
     };
     
     // Function to handle sidebar link clicks
@@ -852,15 +904,14 @@
         document.querySelector('.main').scrollTop = 0;
 
         // --- 2. Mobile Closing Fix ---
-        // Check if the screen is mobile size (optional: only close if sidebar is currently active)
         if (window.innerWidth <= 768 && document.getElementById("sidebar").classList.contains("active")) {
-            toggleSidebar(); // Close sidebar after navigation
+            toggleSidebar();
         }
     }
 
     // Attach handler to all sidebar links except logout
     document.querySelectorAll('.sidebar a:not(#logoutBtn)').forEach(link => {
-        link.removeEventListener('click', handleSidebarLinkClick); // Remove old listener if any
+        link.removeEventListener('click', handleSidebarLinkClick); 
         link.addEventListener('click', handleSidebarLinkClick);
     });
 
